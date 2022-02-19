@@ -1,2 +1,1 @@
-# Bunny350.github.io
-Website for OITSWILLIAM PANG (not Bunny 350)
+# Multipage (directory) test early access for OITSWILLIAM PANG website
