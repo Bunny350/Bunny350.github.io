@@ -14,7 +14,7 @@ if (event_date.event_dates[0].otherdesc_begin == "To be announced") {
 			ev0_date_local = mcsls_date_exact.toLocaleString([],{month:'long'})
 	}
 	}	else  {
-		if (formula.test(event_date.event_dates[0].event_date)) {
+		if (/\d{1,4}\W\d{1,2}\W\d{1,2}/.test(event_date.event_dates[0].event_date)) {
 	ev0_date_local = mcsls_date_exact.toLocaleString([],{year:'numeric', month:'long', day:'numeric'})
 	} else {
 			ev0_date_local = mcsls_date_exact.toLocaleString([],{year:'numeric', month:'long'})
