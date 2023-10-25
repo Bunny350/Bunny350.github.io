@@ -1,0 +1,18 @@
+.text-halloween {
+	color: #e4d1ba;
+}
+.text-halloween h1, .text-halloween p {
+	text-align: center;
+}
+@media (prefers-color-scheme: dark) {
+	.logo-text {
+		fill: #08FF00!important
+	}
+
+	.driving-bar-solid {
+		fill: #FFF200!important
+	}
+a {
+	color: #e4d1ba;
+}
+}
