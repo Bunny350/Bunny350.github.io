@@ -16,3 +16,23 @@ a {
 	color: #e4d1ba;
 }
 } */
+
+/* christmas */
+.text-christmas h1, .text-christmas p {
+	color: #fff;
+	text-align: center;
+}
+.driving-bar-solid {
+		fill: #008200!important
+}
+
+a {
+	color: #008200;
+}
+
+
+@media (prefers-color-scheme: dark) {
+	.driving-bar-solid {
+		fill: #FF00B6!important
+	}
+}
