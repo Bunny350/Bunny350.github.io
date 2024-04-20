@@ -1,5 +1,4 @@
 // we are not smart
-const event_date = JSON.parse(event_dates_list);
 var mcsls_date_exact = new Date(event_date.event_dates[0].event_date);
 let mcsls_event_year = mcsls_date_exact.getFullYear();
 let ev0_date_local;
