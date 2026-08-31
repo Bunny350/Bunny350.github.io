@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en-us">
 <head>
 <meta charset="UTF-8">
 
@@ -8,7 +8,6 @@
 <style>
   @import "./assets/latofonts.css";
   /* @import "festive.css"; */
-  @import "css/testing.css";
 
 :root {
     --oiwp-web-base: #f1f1f1;
@@ -207,40 +206,56 @@
     
   }
   
-/* footer from older version, will be updated asap unless i go lz */
+/* top navigation */
   
-    @media only screen and (min-width: 480px) {
-      .openbtn {
-        display: none
-      }
+  .topnav a {
+      z-index: 2;
   }
   
   .sidepanel .closebtn {
-  position: absolute;
   text-align: right;
-  top: 0;
-  padding: 8px 0px 8px 80%;
+  top: 0px;
+  padding: 0px;
   text-decoration: none;
   border-style: none;
   font-size: 36px;
   }
   
-  div.sidepanel {
+    div.sidepanel {
+    border-radius: 60px;
     width: 0;
+    height: 0;
+    filter: blur(3px);
     position: fixed;
+    display: none;
     z-index: 1;
-    height: 100%;
-    top: 0px;
-    left: 0;
-    background-color: var(--oiwp-web-bg);
-    overflow-x: hidden;
+    top: -150px;
+    background-color: rgba(240, 240, 240, 0.8);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
     white-space: nowrap;
-    transition: 0.3s;
+    justify-content: center;
+    align-content: center;
+    transition: width 0.5s cubic-bezier(0, 0, 0.1, 1), height 0.5s cubic-bezier(0, 0, 0.1, 1), top 0.15s linear, filter 0.4s cubic-bezier(0, 0, 0.4, 1);
   }
+
+    div.sidepanel.open {
+        width: calc(90% + 0px);
+        height: calc(90% + 0px);
+        filter: blur(0px);
+        border-radius: 16px
+    }
+    
+    @media only screen and (max-width: 480px) {
+      div.sidepanel.open {
+          width: calc(100% + 0px);
+          height: calc(100% + 0px)
+      }
+  }
+
   
   div.sidepanel a {
-    padding: 8px 8px 8px 32px;
-    margin-left: 30px;
+      padding: 8px;
     text-decoration: underline;
     color: var(--oiwp-web-gray);
     font-size: 25px;
@@ -250,40 +265,92 @@
   }
   
   div.sidepanel .inner {
-  overflow-y: scroll;
-  margin-top: 60px;
   padding-bottom: 80px;
+  min-width: 90vw;
+  max-width: 1200px;
+  min-height: 90vh;
+  max-height: 800px;
+  margin-left: 24px;
+  margin-right: 24px;
+  overflow: hidden
   }
+    div.sidepanel .nav_links {
+        overflow-y: scroll;
+        height: 100%
+    }
+    
+    div.sidepanel .nav_links .main_categories {
+     display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    div.sidepanel .nav_links .main_categories a {
+    color: #000;
+     text-decoration: none;
+     font-weight: bold;
+     padding: 12px;
+     margin: 4px;
+     border-radius: 12px
+     
+    }
+    div.sidepanel .nav_links .main_categories a:hover {
+        background-color: #e6e6e6;
+        box-shadow: 0 0 3px 0px #4d4d4d;
+    }
   
 </style>
 
 <script>
+  var menuOpen = false;
   function openNav() {
-    window.scrollTo(0, 0);
-    // one person created websites are sometimes lazy
-    document.getElementById("sidemenu").style.width = "100%";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "scale(0.85)";
-    }
-    window.scrollTo(0, 0);
-    document.body.style.overflow = "hidden";
-    // if any scroll is attempted,
-    // set this to the previous value
-    window.onscroll = function() {
+      const homeLink = document.querySelector(".topnav").children[0];
+      const sideMenu = document.getElementById("sidemenu");
+      if (!menuOpen) {
         window.scrollTo(0, 0);
+        sideMenu.style.display = "flex";
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        setTimeout(() => {
+            sideMenu.style.top = "0px";
+            homeLink.href = "index.html";
+            }, 40);
+        setTimeout(() => {
+        // one person created websites are sometimes lazy
+        sideMenu.style.width = null;
+        sideMenu.style.height = null;
+        sideMenu.classList.add("open");
+        menuOpen = true
+        }, 130);
+        window.scrollTo(0, 0);
+        document.body.style.overflow = "hidden";
+        // if any scroll is attempted,
+        // set this to the previous value
+        window.onscroll = function() {
+            window.scrollTo(0, 0);
+        }
     }
 }
 
 function closeNav() {
-    document.body.style.overflow = null;
-    document.getElementById("sidemenu").style.width = "0";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "";
+    const homeLink = document.querySelector(".topnav").children[0];
+    const sideMenu = document.getElementById("sidemenu")
+    if (menuOpen) {
+        document.body.style.overflow = null;
+        sideMenu.classList.remove("open");
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        sideMenu.style.top = "-150px";
+        homeLink.href = "#";
+        sideMenu.style.transition = "width 0.2s cubic-bezier(0, 0, 0, 1), height 0.2s cubic-bezier(0, 0, 0, 1), top 0.15s linear";
+        setTimeout(() => {
+            sideMenu.style.display = "none";
+            sideMenu.style.transition = null;
+            menuOpen = false
+            }, 400);
+        window.onscroll = function() {};
     }
-    window.onscroll = function() {};
 }
+
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -294,7 +361,7 @@ function closeNav() {
 <meta name="og:title" property="og:title" content="Alpha-EA page"/>
 <meta name="og:description" property="og:description" content="Alpha-stage early access, where only followers can test and torture unannounced Oitswilliam's hardware, or even exclusive."/>
 </head>
-<body id="im3ccvk"><HEADER id="ij3fwt-2-16"><div id="top-nav-all-2-16" class="topnav"><div id="ifhnco1-2"><button class="openbtn" onclick="openNav()">☰</button></div><a href="index.html">
+<body id="im3ccvk"><HEADER id="ij3fwt-2-16"><div id="top-nav-all-2-16" class="topnav"><a href="index.html" onclick="openNav()">
   <svg version="1.1" width="200px" viewBox="0 0 436 72" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
    <defs>
     <linearGradient id="driving-bar" x1="4" x2="435.97" y1="17.383" y2="17.383" gradientUnits="userSpaceOnUse">
@@ -329,7 +396,7 @@ function closeNav() {
     </g>
    </g>
   </svg>
-</a><div id="top-nav-main-cats-2-2-3-2-16" class="header-nav"><A href="./hardware.html" id="main-category-hardware-3-2-3-2-16" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-3-2-3-2-16" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-3-2-3-2-16" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-3-2-3-2-16" class="mainnav">Support<br id="imkpb-2-16"/></A></div><div id="nav-topnav-spacing-2-2-3-2-16" class="homepage-spacing landscape"></div></div></HEADER><div id="ik2kfd6"><div id="idqadni"></div><div id="idqadni-2"></div><div id="i1f2hmg" class="backdrop-blur-override"><H1 id="idm9eh1">Alpha-stage early access</H1><div id="ioj1asx">Followers of Oitswilliam Pang get the earliest access to unannounced Oitswilliam hardware, or even exclusive.</div><div id="ia9a81h">By using alpha-EA hardware, you agree to <a href="https://github.com/Bunny350/Miscellaneous-projects/tree/main/Alpha-EA%20licensing%20document" id="iiv3urh" target="_blank">alpha-EA licensing document</a>. This does not apply to hardware in normal EA.</div><div id="i8aydzy"><A href="https://docs.google.com/forms/d/e/1FAIpQLSe9aEM7jyf0lV2PUAgOg0_tz9F7GI91byWFxUzvXsLlXambJA/viewform?usp=dialog" id="alpha-ea-join-link" class="feat-link"><H2 id="irl4zvr">Join now</H2></A></div><div id="i8wm8gi">Note: getting alpha-EA hardware physically through mobile phone is a challenge.</div><div id="inge4ot">Already a member? <a href="https://github.com/Bunny350/alpha-ea" id="ipguhed" target="_blank" title="Note: a valid GitHub account required. Otherwise it will show you a "404" error." class="">Visit alpha-ea repository</a>.</div></div></div><div id="ieqkyvm"><div id="ij5d1pv">Alpha-stage early access <span id="ilfh9m8">(also known as alpha-EA or follower-EA)</span> is a stage of early access made exclusive to followers of Oitswilliam Pang.</div></div><div id="ijl7w48"><div id="im3mw9n"><H1 id="irnfqnl">Road map</H1><div id="izy7xpb">Since 2026, Oitswilliam has gone started on alpha-stage early access.</div></div><div style="overflow-x: scroll">
+</a><div id="top-nav-main-cats-2-2-3-2-16" class="header-nav"><A href="./hardware.html" id="main-category-hardware-3-2-3-2-16" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-3-2-3-2-16" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-3-2-3-2-16" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-3-2-3-2-16" class="mainnav">Support<br id="imkpb-2-16"/></A></div><div id="nav-topnav-spacing-2-2-3-2-16" class="homepage-spacing landscape"></div></div></HEADER><div id="alpha-ea-introduction"><div id="idqadni"></div><div id="idqadni-2"></div><div id="i1f2hmg" class="backdrop-blur-override"><H1 id="idm9eh1">Alpha-stage early access</H1><div id="ioj1asx">Followers of Oitswilliam Pang get the earliest access to unannounced Oitswilliam hardware, or even exclusive.</div><div id="ia9a81h">By using alpha-EA hardware, you agree to <a href="https://github.com/Bunny350/Miscellaneous-projects/tree/main/Alpha-EA%20licensing%20document" id="iiv3urh" target="_blank">alpha-EA licensing document</a>. This does not apply to hardware in normal EA.</div><div id="i8aydzy"><A href="https://docs.google.com/forms/d/e/1FAIpQLSe9aEM7jyf0lV2PUAgOg0_tz9F7GI91byWFxUzvXsLlXambJA/viewform?usp=dialog" id="alpha-ea-join-link" class="feat-link"><H2 id="irl4zvr">Join now</H2></A></div><div id="i8wm8gi">Note: getting alpha-EA hardware physically through mobile phone is a challenge.</div><div id="inge4ot">Already a member? <a href="https://github.com/Bunny350/alpha-ea" id="ipguhed" target="_blank" title="Note: a valid GitHub account required. Otherwise it will show you a "404" error." class="">Visit alpha-ea repository</a>.</div></div></div><div id="alpha-ea-description"><div id="ij5d1pv">Alpha-stage early access <span id="ilfh9m8">(also known as alpha-EA or follower-EA)</span> is a stage of early access made exclusive to followers of Oitswilliam Pang.</div></div><div id="alpha-ea-ea-progress-roadmap"><div id="im3mw9n"><H1 id="irnfqnl">Road map</H1><div id="izy7xpb">Since 2026, Oitswilliam has gone started on alpha-stage early access.</div></div><div style="overflow-x: scroll">
 <pre class="mermaid" style="margin: auto; width: 800px">
     flowchart LR
             A(Alpha-EA) -- If satisfied but needs further test, including to non-followers --> B(EA)
@@ -341,7 +408,7 @@ function closeNav() {
 </div>  <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
     mermaid.initialize({ startOnLoad: true });
-  </script><div id="ikzyrsl"><div id="inq6drh">Usually, major hardware will release in early access due to lacking of manuals and / or constant changes. Hardware with Oitswilliam-first feature do not nominate for normal EA or alpha-EA. Normal EA (also known as beta-EA) are later stage, but not follower-exclusive and is accessible to the public.</div></div><H2 id="iidq0rk">Hardware previously in alpha-EA or currently exclusive to followers</H2><div id="i4g66tp">These hardware were previously in alpha-EA and has been released. We have been testing these happily for the time.</div><div id="irg7zfi">Interact by scrolling by-side.</div><div id="previously-follower-excl"><div id="hw-alpha-ea-2026" class="box-alpha-ea"><H2 id="i6t41s9-2">2026<br id="iremiid-2"/></H2><div id="i8ziv8f-2"><ul id="icj5cbi-2"><li id="i8zfith-2"><a href="https://github.com/Bunny350/Non-motion-MCU" id="imawwqb" target="_blank">Non-motion MCU</a></li><li id="iqajeyl-2"><a href="https://github.com/Bunny350/OITSWILLIAMV0/tree/For-V0.2/STLs/Exhaust%20XS" id="i2rf9de" target="_blank">Exhaust XS for Voron 0</a></li></ul></div></div><div id="hw-follower-excl" class="box-alpha-ea"><H2 id="i6t41s9-2-2">Follower-exclusive<br id="iremiid-2-2"/></H2><div id="i8ziv8f-2-2"><ul id="icj5cbi-2-2"><li id="i8zfith-2-2"><a href="https://www.instagram.com/p/DWLveRjk1bY/?utm_source=ig_web_copy_link" id="iaowgdn" target="_blank">NAS shelf</a><br id="id1agwf"/></li><li draggable="true" id="iosieol"><a href="https://www.instagram.com/p/DVAKJ5Lk_lg/?utm_source=ig_web_copy_link" id="isdnlf7" target="_blank">PocketSCC</a><br id="i5e358h"/></li><li draggable="true" id="io2ksv2" class="gjs-hovered">Thermometer AA battery mod Pro</li><li draggable="true" id="ivs4dzm" class="gjs-hovered"><a href="https://www.facebook.com/share/p/18zFkpdxbK/" id="iz6o5hb" target="_blank">Cereal box PolyDryer adapter</a></li></ul></div><div id="ifa8bwj">This perk also gains an early-access to research papers and exclusive behind-the-scenes documents &amp; current Klipper config of Oitswilliam's printers (including V0.2378 &amp; V2.3347) as well!</div></div></div></div><div id="igih94j"><H1 id="ibq4k61">Questions</H1><div class="tab-rebuilt">
+  </script><div id="ikzyrsl"><div id="inq6drh">Usually, major hardware will release in early access due to lacking of manuals and / or constant changes. Hardware with Oitswilliam-first feature do not nominate for normal EA or alpha-EA. Normal EA (also known as beta-EA) are later stage, but not follower-exclusive and is accessible to the public.</div></div><H2 id="iidq0rk">Hardware previously in alpha-EA or currently exclusive to followers</H2><div id="i4g66tp">These hardware were previously in alpha-EA and has been released. We have been testing these happily for the time.</div><div id="irg7zfi">Interact by scrolling by-side.</div><div id="previously-follower-excl"><div id="hw-alpha-ea-2026" class="box-alpha-ea"><H2 id="i6t41s9-2">2026<br id="iremiid-2"/></H2><div id="i8ziv8f-2"><ul id="icj5cbi-2"><li id="i8zfith-2"><a href="https://github.com/Bunny350/Non-motion-MCU" id="imawwqb" target="_blank">Non-motion MCU</a></li><li id="iqajeyl-2"><a href="https://github.com/Bunny350/OITSWILLIAMV0/tree/For-V0.2/STLs/Exhaust%20XS" id="i2rf9de" target="_blank">Exhaust XS for Voron 0</a></li></ul></div></div><div id="hw-follower-excl" class="box-alpha-ea"><H2 id="i6t41s9-2-2">Follower-exclusive<br id="iremiid-2-2"/></H2><div id="i8ziv8f-2-2"><ul id="icj5cbi-2-2"><li id="i8zfith-2-2"><a href="https://www.instagram.com/p/DWLveRjk1bY/?utm_source=ig_web_copy_link" id="iaowgdn" target="_blank">NAS shelf</a><br id="id1agwf"/></li><li draggable="true" id="iosieol"><a href="https://www.instagram.com/p/DVAKJ5Lk_lg/?utm_source=ig_web_copy_link" id="isdnlf7" target="_blank">PocketSCC</a><br id="i5e358h"/></li><li draggable="true" id="io2ksv2" class="gjs-hovered">Thermometer AA battery mod Pro</li><li draggable="true" id="ivs4dzm" class="gjs-hovered"><a href="https://www.facebook.com/share/p/18zFkpdxbK/" id="iz6o5hb" target="_blank">Cereal box PolyDryer adapter</a></li><li draggable="true" id="ijwmy1r"><a href="https://youtu.be/WJL_zeijglc" id="idxmu3r" target="_blank">Mod mainboard for LuvA-PureAir Plus</a></li></ul></div><div id="ifa8bwj">This perk also gains an early-access to research papers and exclusive behind-the-scenes documents &amp; current Klipper config of Oitswilliam's printers (including V0.2378 &amp; V2.3347) as well!</div></div></div></div><div id="alpha-ea-qa"><H1 id="ibq4k61">Questions</H1><div class="tab-rebuilt">
     <div class="tab-rebuilt section">
         <div class="tab-nav button-as-section" style="flex: 1">
             <button class="tablinks active" onclick="alphaeaqa(event, 'joining')" id="defaultOpen">What is the alpha-ea repository, the features and how can I join in alpha-EA?</button>
@@ -559,17 +626,18 @@ function alphaeaqa(evt, name) {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 </script>
-</div><FOOTER id="footer-2-16" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px">
-    <div class="inner">
+</div><FOOTER id="footer-2-16" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px; height: 0px">
+        <div class="inner">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="index.html" class="">Home</a>
-        <a href="/blogs" class="">Blog</a>
+          <div class="nav_links">
+            <div class="main_categories">
+              <a href="hardware.html" class="">Hardware</a>
+              <a href="media.html" class="">Media</a>
+              <a href="minecraft-content.html" class="">For Minecraft</a>
+              <a href="support.html" class="">Support</a>
+            </div>
         <br>
-        <h2>Main categories</h2>
-        <a href="hardware.html" class="">Hardware</a>
-        <a href="media.html" class="">Media</a>
-        <a href="minecraft-content.html" class="">For Minecraft</a>
-        <a href="support.html" class="">Support</a>
+        <a href="/blogs" class="">Blog</a>
         <br>
         <h2>About</h2>
         <a href="owned-3d-printers.html" class="">Owned 3D printers</a>
@@ -577,6 +645,7 @@ document.getElementById("defaultOpen").click();
         <h2>Usage Policies</h2>
         <a href="terms-of-use.html" class="">Terms of Use</a>
         <a href="sheer-dedicated-server-usage-policy.html" class="">SDS Usage Policy</a>
+          </div>
     </div>
 </div>
 <div id="izp9zr3-7" class="footer-nav--container"><div id="ijpscfp-3-15" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-3-16">Main categories</H3><P id="iejg7kj-4-16"><A href="./hardware.html" id="ia0ytdj-4-16">Hardware</A></P><P id="iejg7kj-2-5-16"><A href="./media.html" id="ia0ytdj-2-5-16">Media</A></P><P id="iejg7kj-2-3-4-16"><A href="./minecraft-content.html" id="ia0ytdj-2-3-4-16">For Minecraft</A></P><P id="iejg7kj-2-2-3-16"><A href="./support.html" id="ia0ytdj-2-2-2-16">Support</A></P><H3 id="iha1ect-4-16">Featured projects<br id="ig51bx7-3-16"/></H3><P id="iejg7kj-2-3-2-5-16"><A href="./interview-with-oitswilliam.html" id="ia0ytdj-2-3-2-5-16">Interview with Oitswilliam<br id="i2rs205-5-16"/></A></P><P id="iejg7kj-2-3-2-3-3-16"><A href="./oitswilliamv2.html" id="ia0ytdj-2-3-2-3-3-16">OitswilliamV2<br id="i2rs205-3-3-16"/></A></P><P id="iejg7kj-2-3-2-2-3-16"><A href="./oitswilliamv0.html" id="ia0ytdj-2-3-2-2-3-16">OITSWILLIAMV0<br id="i2rs205-2-3-16"/></A></P></div><div id="ijpscfp-2-2-15" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-2-2-16">About</H3><P id="iejg7kj-3-2-16"><A href="./owned-3d-printers.html" id="ia0ytdj-3-2-16">Owned 3D printers</A></P><P id="iejg7kj-2-4-2-16"><A href="./rigs.html" id="ia0ytdj-2-4-2-16">Rigs</A></P><P id="iejg7kj-2-3-3-2-16"><A href="./events.html" id="ia0ytdj-2-3-3-2-16">Future events</A></P><P id="iejg7kj-2-2-2-2-16"></P><H3 id="iha1ect-3-2-16">Using Oitswilliam's products<br id="ig51bx7-2-2-16"/></H3><P id="iejg7kj-2-3-2-4-2-16"><A href="./terms-of-use.html" id="ia0ytdj-2-3-2-4-2-16">Terms of Use<br id="i2rs205-4-2-16"/></A></P><P id="iejg7kj-2-3-2-3-2-2-16"><A href="./oitswilliam-pang-minecraft-maps-and-legacy-projects-policies.html" id="ia0ytdj-2-3-2-3-2-2-16">Oitswilliam's MC Maps Policy<br id="i2rs205-3-2-2-16"/></A></P><P id="iejg7kj-2-3-2-2-2-2-16"><A href="./sheer-dedicated-server-usage-policy.html" id="ia0ytdj-2-3-2-2-2-2-16">SDS Usage Policy<br id="i2rs205-2-2-2-16"/></A></P></div></div><div id="i12iczf-2-16"><H2 id="ifkhcum-2">Follow Oitswilliam Pang now on:</H2><div id="follow-on-platforms" class="social-media-icon-list">
@@ -669,6 +738,23 @@ document.getElementById("defaultOpen").click();
     <a href="https://github.com/Bunny350/Bunny350.github.io/blob/main/LICENSE" class="" target="_blank">Licenses</a>
 
     <script>
+    // initialize the link just so if js was disabled home link will always be there
+    function changeBrandLinkByResize() {
+        const homeLink = document.querySelector(".topnav").children[0];
+          const width = window.innerWidth
+          if (width > 480) {
+            if (menuOpen) {
+              closeNav()
+            } else {
+              homeLink.href = "index.html";
+            }
+          } else {
+              homeLink.href = "#";
+            }
+        }
+      changeBrandLinkByResize();
+    window.addEventListener("resize", changeBrandLinkByResize);
+      
     const makecurrentd = new Date();
     let monthcheck = makecurrentd.getMonth();
     let daycheck = makecurrentd.getDate();

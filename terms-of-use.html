@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en-us">
 <head>
 <meta charset="UTF-8">
 
@@ -8,7 +8,6 @@
 <style>
   @import "./assets/latofonts.css";
   /* @import "festive.css"; */
-  @import "css/testing.css";
 
 :root {
     --oiwp-web-base: #f1f1f1;
@@ -207,40 +206,56 @@
     
   }
   
-/* footer from older version, will be updated asap unless i go lz */
+/* top navigation */
   
-    @media only screen and (min-width: 480px) {
-      .openbtn {
-        display: none
-      }
+  .topnav a {
+      z-index: 2;
   }
   
   .sidepanel .closebtn {
-  position: absolute;
   text-align: right;
-  top: 0;
-  padding: 8px 0px 8px 80%;
+  top: 0px;
+  padding: 0px;
   text-decoration: none;
   border-style: none;
   font-size: 36px;
   }
   
-  div.sidepanel {
+    div.sidepanel {
+    border-radius: 60px;
     width: 0;
+    height: 0;
+    filter: blur(3px);
     position: fixed;
+    display: none;
     z-index: 1;
-    height: 100%;
-    top: 0px;
-    left: 0;
-    background-color: var(--oiwp-web-bg);
-    overflow-x: hidden;
+    top: -150px;
+    background-color: rgba(240, 240, 240, 0.8);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
     white-space: nowrap;
-    transition: 0.3s;
+    justify-content: center;
+    align-content: center;
+    transition: width 0.5s cubic-bezier(0, 0, 0.1, 1), height 0.5s cubic-bezier(0, 0, 0.1, 1), top 0.15s linear, filter 0.4s cubic-bezier(0, 0, 0.4, 1);
   }
+
+    div.sidepanel.open {
+        width: calc(90% + 0px);
+        height: calc(90% + 0px);
+        filter: blur(0px);
+        border-radius: 16px
+    }
+    
+    @media only screen and (max-width: 480px) {
+      div.sidepanel.open {
+          width: calc(100% + 0px);
+          height: calc(100% + 0px)
+      }
+  }
+
   
   div.sidepanel a {
-    padding: 8px 8px 8px 32px;
-    margin-left: 30px;
+      padding: 8px;
     text-decoration: underline;
     color: var(--oiwp-web-gray);
     font-size: 25px;
@@ -250,40 +265,92 @@
   }
   
   div.sidepanel .inner {
-  overflow-y: scroll;
-  margin-top: 60px;
   padding-bottom: 80px;
+  min-width: 90vw;
+  max-width: 1200px;
+  min-height: 90vh;
+  max-height: 800px;
+  margin-left: 24px;
+  margin-right: 24px;
+  overflow: hidden
   }
+    div.sidepanel .nav_links {
+        overflow-y: scroll;
+        height: 100%
+    }
+    
+    div.sidepanel .nav_links .main_categories {
+     display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    div.sidepanel .nav_links .main_categories a {
+    color: #000;
+     text-decoration: none;
+     font-weight: bold;
+     padding: 12px;
+     margin: 4px;
+     border-radius: 12px
+     
+    }
+    div.sidepanel .nav_links .main_categories a:hover {
+        background-color: #e6e6e6;
+        box-shadow: 0 0 3px 0px #4d4d4d;
+    }
   
 </style>
 
 <script>
+  var menuOpen = false;
   function openNav() {
-    window.scrollTo(0, 0);
-    // one person created websites are sometimes lazy
-    document.getElementById("sidemenu").style.width = "100%";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "scale(0.85)";
-    }
-    window.scrollTo(0, 0);
-    document.body.style.overflow = "hidden";
-    // if any scroll is attempted,
-    // set this to the previous value
-    window.onscroll = function() {
+      const homeLink = document.querySelector(".topnav").children[0];
+      const sideMenu = document.getElementById("sidemenu");
+      if (!menuOpen) {
         window.scrollTo(0, 0);
+        sideMenu.style.display = "flex";
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        setTimeout(() => {
+            sideMenu.style.top = "0px";
+            homeLink.href = "index.html";
+            }, 40);
+        setTimeout(() => {
+        // one person created websites are sometimes lazy
+        sideMenu.style.width = null;
+        sideMenu.style.height = null;
+        sideMenu.classList.add("open");
+        menuOpen = true
+        }, 130);
+        window.scrollTo(0, 0);
+        document.body.style.overflow = "hidden";
+        // if any scroll is attempted,
+        // set this to the previous value
+        window.onscroll = function() {
+            window.scrollTo(0, 0);
+        }
     }
 }
 
 function closeNav() {
-    document.body.style.overflow = null;
-    document.getElementById("sidemenu").style.width = "0";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "";
+    const homeLink = document.querySelector(".topnav").children[0];
+    const sideMenu = document.getElementById("sidemenu")
+    if (menuOpen) {
+        document.body.style.overflow = null;
+        sideMenu.classList.remove("open");
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        sideMenu.style.top = "-150px";
+        homeLink.href = "#";
+        sideMenu.style.transition = "width 0.2s cubic-bezier(0, 0, 0, 1), height 0.2s cubic-bezier(0, 0, 0, 1), top 0.15s linear";
+        setTimeout(() => {
+            sideMenu.style.display = "none";
+            sideMenu.style.transition = null;
+            menuOpen = false
+            }, 400);
+        window.onscroll = function() {};
     }
-    window.onscroll = function() {};
 }
+
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -292,7 +359,7 @@ function closeNav() {
 <link rel="icon" href="assets/oiwp-favicon.png" />
 <meta name="description" property="description" content="The document that some Oitswilliam Pang projects use."/>
 </head>
-<body id="itciz2"><HEADER id="ij3fwt-2-7"><div id="top-nav-all-2-7" class="topnav"><div id="icv4gb9"><button class="openbtn" onclick="openNav()">☰</button></div><a href="index.html">
+<body id="itciz2"><HEADER id="ij3fwt-2-7"><div id="top-nav-all-2-7" class="topnav"><a href="index.html" onclick="openNav()">
   <svg version="1.1" width="200px" viewBox="0 0 436 72" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
    <defs>
     <linearGradient id="driving-bar" x1="4" x2="435.97" y1="17.383" y2="17.383" gradientUnits="userSpaceOnUse">
@@ -328,17 +395,18 @@ function closeNav() {
    </g>
   </svg>
 </a><div id="top-nav-main-cats-2-2-3-2-7" class="header-nav"><A href="./hardware.html" id="main-category-hardware-3-2-3-2-7" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-3-2-3-2-7" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-3-2-3-2-7" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-3-2-3-2-7" class="mainnav">Support<br id="imkpb-2-7"/></A></div><div id="nav-topnav-spacing-2-2-3-2-7" class="homepage-spacing landscape"></div></div></HEADER><div id="i5am3h"><div id="iruvyi"><h1 id="iavvmb">Oitswilliam Pang Hardware, Web and Project Terms of Use</h1><p id="iilv0x">Welcome to Oitswilliam Pang website! Oitswilliam Pang is a person that lets things happen, hardware that were impossible real and make everything neumorphic. By using certain parts of projects made by Oitswilliam Pang, you need to agree to the Terms of Use which is explained below.</p><h2 id="introduction">LIST OF DEFINITION</h2><p id="iif7mh">There are two ways to define Oitswilliam Pang: Oitswilliam Pang as a group can be known as OIWP, while Oitswilliam Pang as a person is known as Oitswilliam.<br id="i4bolkh"/>Projects include Hardware, which has original design and Mods. Mods are defined as modifications of other design group's projects. Media, which includes videos and Livestreams. And lastly, Legacy projects, formerly Bunny 350 Projects, defines recurring Minecraft projects and the obsolete projects.</p><ul id="i8x5uo"><li id="i6lo2l">BOM stands for Bill of Materials is a list of sub-components that were used when assembling the products.<br id="idjvatu"/></li><li draggable="true" id="itmy6hv">In this document, "smart device" refers, but not limited to; smartphones, tablets, smartwatches and smart fridges that either does or does not support reading of files.<br id="iovdpuk"/></li><li draggable="true" id="itvhoeo">Alpha-stage early access (also known as alpha-EA for short, and follower-EA for purpose) is a stage where only followers of Oitswilliam Pang access, test and torture before official unveil and anyone else can experience.</li><li draggable="true" id="iwowngv">Beta-stage early access (also known as just EA for short, or beta-EA) is a stage where anyone else can access and test, usually after official unveil.</li><li draggable="true" id="ih8z6vd">LOGO - this section explains how to properly use OIWP logo assets, and shows what not to do to the logo.<br draggable="true" id="i7r9ni"/></li><li id="i1in6z">HARDWARE PROJECTS - this section explains the legal use of Hardware projects.<br id="icc09g"/></li><li id="i85qhn">PCBS - this section is made specifically for Oitswilliam Pang printed circuit boards.<br id="i6kf5d"/></li><li draggable="true" id="id0yjwt">EARLY ACCESS - this section explains about early access stages Oitswilliam do. </li><li draggable="true" id="inrcph9" class="gjs-hovered">EXCLUSIVE CONTENT &amp; SPONSORSHIPS - this section explains exclusive content Oitswilliam has made and will make for sponsorships.</li><li draggable="true" id="i3nv3ma" class="gjs-hovered">For policies for sponsoring, Passivepromo and Activepromo, please refer to the sponsorship policy.</li><li id="ijiyob">To see how to properly use Oitswilliam Pang (the person) from the assets, please visit Using Oitswilliam Pang in the sponsorship policy.<br id="ih1q0c"/></li><li id="in3frl">For the Legacy Projects policy, please refer and view Oitswilliam's Minecraft Maps and Legacy Projects Policies.<br id="ijbvnk"/></li><li id="ipswl6">For Sheer Dedicated Server's rules, please refer and view Sheer Dedicated Server Usage Policy.<br id="i9w4hc"/></li><li id="ixiui9">For Oitswilliam Pang Discord Server, please agree to Discord's Terms of Use and refer to #rules text channel.<br id="i3r1qm"/></li><li id="iq6npj">For the licensing policy of the select projects, you may refer to it's licensing policy of the selected project.</li></ul><div id="i6r783e"></div><h2 id="conduction">CONDUCTING ACTIONS
-</h2><p id="ioid17">By using Oitswilliam Pang website, downloading OIWP Minecraft projects to your smart device or your computer, or downloading OIWP brand assets to your smart device or your computer, you must agree OIWP Terms of Use. If you don't agree OIWP Terms of Use or the project's miscellaneous policies, you shall not use OIWP hardware or OIWP Website, and you may delete OIWP materials everywhere from your device.<br id="iy2plgj"/><br id="id1g5fr"/>Archiving Oitswilliam Pang website, including technical assets, such as CSS and JavaScript, is allowed, as long as it is for historical purposes, among other things.</p><h2 id="logo">LOGO</h2>Logos made by Oitswilliam Pang are copyrighted in proprietary license. Logos containing others' work may be copyrighted to them, meaning others, including fonts in OIWP logos, even when modified. Please read carefully about using the logo assets.<br id="ib2eko"/><br id="imawrg"/>Oitswilliam Pang may change logos of the brand at any time, such as for resolving visual problems. (Project) Brands that are unreleased might not be obtainable.<br id="ikhbni"/><br id="ip76g5"/>You can use Oitswilliam Pang assets, including OIWP Projects for your video about Oitswilliam Pang projects, including the thumbnail. You may use Oitswilliam Pang assets to promote OIWP products, but you must add your manufacturer or supplier brand. Although Oitswilliam Pang / OIWP is not a brand, you may refer to their brand promotion policy if you are not in properties that are yours. You may not use Oitswilliam Pang assets for unlawful use such as, but not limited to; phishing, impersonation, or harass anyone, including Oitswilliam Pang himself.<br id="iwxzgm"/><br id="igcnol"/>You may not alter (shape-shifting or changing the proportion) of the logo, recolor, tear the bar emblem and the logotype in Oitswilliam Pang logo. The logo must shown its legibility by using either white version or black version, and with either colored bar or monochrome bar. Use the monochrome logo if there are color that may lose the logo's legibility. Use the multi-color if there is nothing happen. Oitswilliam Pang may reserve right to catch and request removal of violations of OIWP logo usages.<br id="inaobg"/><h2 id="hardware-projects">HARDWARE PROJECTS</h2>Hardware Projects issued by Oitswilliam Pang are usually free and open-source. Some hardware projects are licensed under GPLV3 or Creative Commons, which do not apply Oitswilliam's Policies. But if you have caught someone selling Oitswilliam Pang released Hardware files including Mods for a paid cost, it is a scam, it is advised to stay away from them.<br id="i0flzo"/><br id="i4p93q"/>Restrictions for Oitswilliam Pang design projects with this as primary licensing agreement apply, you are not recommended to sell Oitswilliam Pang design projects' or products' printed parts, as it is meant to be printed or built from user's own machines. However you are allowed to pre-build and sell BOM parts that are otherwise risky for users to build these themselves, including batteries.<br id="ipzb5p"/><br id="iyra7k"/>Please note that you may not use Oitswilliam Pang hardware under this document, including Mods for illegal or unlawful uses, including but not limited to cause any types of injury. You may also not use Oitswilliam Pang design hardware including Mods to build weapons, military defense products or simply products that are weaponized.<br id="i65thh"/><br id="irvzb9"/>Oitswilliam Pang may reserve right to slightly change, majorly change, improve projects or discontinue the part by removing or discontinue the released project by archiving, you may read the project's update info to make sure if the part needs to be re-processed. Oitswilliam Pang may reserve rights to privatize original or non-mod projects, or create / make the region-lock for them when such project does not meet, but may violate the policy or laws of what the country's or region's department.<br id="inksi1"/><h2 id="pcb-tou">PCBS</h2>PCBs (short of printed circuit boards) is an addition of Oitswilliam Pang's hardware design family. Some of the projects are licensed under GPLv3 license, which do not apply Oitswilliam's policies.<br id="i94hcfx"/><br id="i4ro0pt"/>Restriction of PCBs made by Oitswilliam Pang with GPLv3 just prohibits rebranding with minimal to no modifications to the board hardware and requires crediting the original maker of the board hardware if remixed, modified or derived.<br id="i1pqth"/><br id="iw0eig"/>Restriction of PCBs made by Oitswilliam Pang with this as primary licensing agreement apply. Although you are allowed to modify / improve Oitswilliam's PCB, there are following conditions you must follow: 1. you are required to add your name, the company name or at least your username, 2. you are not allowed to remove Oitswilliam Pang logos, but you are allowed to rotate and move it away from drilling holes, and 3. if you want to publicly commercialize such product that is modified, it needs to be reviewed by Oitswilliam Pang for consistency, and let Oitswilliam Pang partner your company. You may not publicly commercialize OIWP PCB hardware without letting Oitswilliam know. Public commercialization includes selling publicly or to other people in any shopping platforms, and marketing. However, internal / private commercialization, such as sending to outsourcing production factories, do not count, we do not even have the apparatus to track down our files.<br id="iyaadkh"/><h2 id="early-access">EARLY ACCESS</h2>Early access content are things that are primarily be tested. Some of them did not have assembly manuals and thus been put in early access until a clearly instructed assembly manual has put. Oitswilliam does early access in two stages, alpha-stage early access and beta-stage early access.<br id="i5t3dzl"/><h3 id="alpha-ea">Alpha-stage early access</h3>Alpha-stage early access is the stage which is usually internal and where only followers of Oitswilliam Pang gain access to, use, test and torture the project, hardware or parts. These parts will receive minor changes throughout development. Non-followers may not access parts but can view the project or hardware inside social media platforms.<br id="ifl4lhk"/><br id="izi16pi"/>Oitswilliam Pang will not reveal the full name of the hardware, but testers can expose its full name via social media platforms. You may flag issues of the projects, hardware and parts in <span id="ikm2c7o"><i id="ihznyrc">alpha-ea</i></span> repository. You may not use these projects, hardware or parts for commercial use, both internal (unless explicitly specified by Oitswilliam Pang) and external, including but not limited to selling parts with or without any specified reason. You are not allowed to own projects, hardware or parts that are currently in alpha-stage early access, unless when it goes outside alpha-stage. You are ordered to delete the parts and the whole folder / repository of alpha-stage early access if you lose access to the repository you have violated the licensing policy or wanted to opt-out of testing.<br id="i0m7h8b"/><br id="iv6ttwh"/>For exact written licensing document for alpha-stage early access, <a __p="undefined" draggable="true" href="https://github.com/Bunny350/Miscellaneous-projects/tree/main/Alpha-EA%20licensing%20document" id="i5u9qpg" target="_blank">please refer to the copy of it on GitHub.</a> A copy of it is available to non-followers.<br id="iko3cah"/><h3 id="ea">Beta-stage early access</h3>Beta-stage early access is the stage where all people can access to, use and test the hardware or parts. Hardware and parts in beta-stage early access do not follow the licensing policy from alpha-EA, will be in another licensing policy and thus users can own hardware and parts, even in forms during in alpha-EA. Commercial use and remix culture are condemned as there are constant changes, but Oitswilliam can't stop or literally prohibit them from happening.<br id="iq25pdg"/><br id="i7s0tah"/>Unless without assembly manuals, or need some minor change, parts during in beta-stage early access after having assembly manuals will usually go in generally availability within two weeks.<br id="i7lqc0o"/><h2 id="exclusive-content">EXCLUSIVE CONTENT &amp; SPONSORSHIPS</h2>Oitswilliam Pang is making content on Facebook, Instagram and YouTube, non-stop, and so publishing models through GitHub, MakerWorld and other model site platforms. There are exclusive content made for the followers of Oitswilliam Pang. Exclusive content includes but not limited to alpha-stage early access, current Klipper-ran printers' configuration files and spectate anywhere in Sheer Dedicated Server in Minecraft. Please refer to Alpha-stage early access section. This will not change to paid donator perks if ever available.<br id="i4jz6d9"/><br id="i95qcks"/>Only followers can chat with Oitswilliam Pang beyond official / technical support, unless during livestreams or if explicitly specified. Explicit specification includes actually interviewing.<br id="i1xwn5n"/><br id="ir62yc2"/>There are exclusive content solutions made for the companies whose knew who Oitswilliam Pang is, through Passivepromo and Activepromo, please refer to the sponsorship policy for the information.<br id="imddnyu"/><br id="i4wuynu"/>For exclusive perks in OITSWILLIAM PANG Discord chat server, although we are very appreciated when users show support by boosting the chat server, there are no exclusive perks for Nitro boosters on OITSWILLIAM PANG Discord chat server.<br id="ierk98"/><br id="izh0uk"/>Updated on July 29, 2026.<br id="iwqabj"/></div></div><FOOTER id="footer-2-2" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px">
-    <div class="inner">
+</h2><p id="ioid17">By using Oitswilliam Pang website, downloading OIWP Minecraft projects to your smart device or your computer, or downloading OIWP brand assets to your smart device or your computer, you must agree OIWP Terms of Use. If you don't agree OIWP Terms of Use or the project's miscellaneous policies, you shall not use OIWP hardware or OIWP Website, and you may delete OIWP materials everywhere from your device.<br id="iy2plgj"/><br id="id1g5fr"/>Archiving Oitswilliam Pang website, including technical assets, such as CSS and JavaScript, is allowed, as long as it is for historical purposes, among other things.</p><h2 id="logo">LOGO</h2>Logos made by Oitswilliam Pang are copyrighted in proprietary license. Logos containing others' work may be copyrighted to them, meaning others, including fonts in OIWP logos, even when modified. Please read carefully about using the logo assets.<br id="ib2eko"/><br id="imawrg"/>Oitswilliam Pang may change logos of the brand at any time, such as for resolving visual problems. (Project) Brands that are unreleased might not be obtainable.<br id="ikhbni"/><br id="ip76g5"/>You can use Oitswilliam Pang assets, including OIWP Projects for your video about Oitswilliam Pang projects, including the thumbnail. You may use Oitswilliam Pang assets to promote OIWP products, but you must add your manufacturer or supplier brand. Although Oitswilliam Pang / OIWP is not a brand, you may refer to their brand promotion policy if you are not in properties that are yours. You may not use Oitswilliam Pang assets for unlawful use such as, but not limited to; phishing, impersonation, or harass anyone, including Oitswilliam Pang himself.<br id="iwxzgm"/><br id="igcnol"/>You may not alter (shape-shifting or changing the proportion) of the logo, recolor, tear the bar emblem and the logotype in Oitswilliam Pang logo. The logo must shown its legibility by using either white version or black version, and with either colored bar or monochrome bar. Use the monochrome logo if there are color that may lose the logo's legibility. Use the multi-color if there is nothing happen. Oitswilliam Pang may reserve right to catch and request removal of violations of OIWP logo usages.<br id="inaobg"/><h2 id="hardware-projects">HARDWARE PROJECTS</h2>Hardware Projects issued by Oitswilliam Pang are usually free and open-source. Some hardware projects are licensed under GPLV3 or Creative Commons, which do not apply Oitswilliam's Policies. But if you have caught someone selling Oitswilliam Pang released Hardware files including Mods for a paid cost, it is a scam, it is advised to stay away from them.<br id="i0flzo"/><br id="i4p93q"/>Restrictions for Oitswilliam Pang design projects with this as primary licensing agreement apply, you are not recommended to sell Oitswilliam Pang design projects' or products' printed parts, as it is meant to be printed or built from user's own machines. However you are allowed to pre-build and sell BOM parts that are otherwise risky for users to build these themselves, including batteries.<br id="ipzb5p"/><br id="iyra7k"/>Please note that you may not use Oitswilliam Pang hardware under this document, including Mods for illegal or unlawful uses, including but not limited to cause any types of injury. You may also not use Oitswilliam Pang design hardware including Mods to build weapons, military defense products or simply products that are weaponized.<br id="i65thh"/><br id="irvzb9"/>Oitswilliam Pang may reserve right to slightly change, majorly change, improve projects or discontinue the part by removing or discontinue the released project by archiving, you may read the project's update info to make sure if the part needs to be re-processed. Oitswilliam Pang may reserve rights to privatize original or non-mod projects, or create / make the region-lock for them when such project does not meet, but may violate the policy or laws of what the country's or region's department.<br id="inksi1"/><h2 id="pcb-tou">PCBS</h2>PCBs (short of printed circuit boards) is an addition of Oitswilliam Pang's hardware design family. Some of the projects are licensed under GPLv3 license, which do not apply Oitswilliam's policies.<br id="i94hcfx"/><br id="i4ro0pt"/>Restriction of PCBs made by Oitswilliam Pang with GPLv3 just prohibits rebranding with minimal to no modifications to the board hardware and requires crediting the original maker of the board hardware if remixed, modified or derived.<br id="i1pqth"/><br id="iw0eig"/>Restriction of PCBs made by Oitswilliam Pang with this as primary licensing agreement apply. Although you are allowed to modify / improve Oitswilliam's PCB, there are following conditions you must follow: 1. you are required to add your name, the company name or at least your username, 2. you are not allowed to remove Oitswilliam Pang logos, but you are allowed to rotate and move it away from drilling holes, and 3. if you want to publicly commercialize such product that is modified, it needs to be reviewed by Oitswilliam Pang for consistency, and let Oitswilliam Pang partner your company. You may not publicly commercialize OIWP PCB hardware without letting Oitswilliam know. Public commercialization includes selling publicly or to other people in any shopping platforms, and marketing. However, internal / private commercialization, such as sending to outsourcing production factories, do not count, we do not even have the apparatus to track down our files.<br id="iyaadkh"/><h2 id="early-access">EARLY ACCESS</h2>Early access content are things that are primarily be tested. Some of them did not have assembly manuals and thus been put in early access until a clearly instructed assembly manual has put. Oitswilliam does early access in two stages, alpha-stage early access and beta-stage early access.<br id="i5t3dzl"/><h3 id="alpha-ea">Alpha-stage early access</h3>Alpha-stage early access is the stage which is usually internal and where only followers of Oitswilliam Pang gain access to, use, test and torture the project, hardware or parts. These parts will receive minor changes throughout development. Non-followers may not access parts but can view the project or hardware inside social media platforms.<br id="ifl4lhk"/><br id="izi16pi"/>Oitswilliam Pang will not reveal the full name of the hardware, but testers can expose its full name via social media platforms. You may flag issues of the projects, hardware and parts in <span id="ikm2c7o"><i id="ihznyrc">alpha-ea</i></span> repository. You may not use these projects, hardware or parts for commercial use, both internal (unless explicitly specified by Oitswilliam Pang) and external, including but not limited to selling parts with or without any specified reason. You are not allowed to own projects, hardware or parts that are currently in alpha-stage early access, unless when it goes outside alpha-stage. You are ordered to delete the parts and the whole folder / repository of alpha-stage early access if you lose access to the repository you have violated the licensing policy or wanted to opt-out of testing.<br id="i0m7h8b"/><br id="iv6ttwh"/>For exact written licensing document for alpha-stage early access, <a __p="undefined" draggable="true" href="https://github.com/Bunny350/Miscellaneous-projects/tree/main/Alpha-EA%20licensing%20document" id="i5u9qpg" target="_blank">please refer to the copy of it on GitHub.</a> A copy of it is available to non-followers.<br id="iko3cah"/><h3 id="ea">Beta-stage early access</h3>Beta-stage early access is the stage where all people can access to, use and test the hardware or parts. Hardware and parts in beta-stage early access do not follow the licensing policy from alpha-EA, will be in another licensing policy and thus users can own hardware and parts, even in forms during in alpha-EA. Commercial use and remix culture are condemned as there are constant changes, but Oitswilliam can't stop or literally prohibit them from happening.<br id="iq25pdg"/><br id="i7s0tah"/>Unless without assembly manuals, or need some minor change, parts during in beta-stage early access after having assembly manuals will usually go in generally availability within two weeks.<br id="i7lqc0o"/><h2 id="exclusive-content">EXCLUSIVE CONTENT &amp; SPONSORSHIPS</h2>Oitswilliam Pang is making content on Facebook, Instagram and YouTube, non-stop, and so publishing models through GitHub, MakerWorld and other model site platforms. There are exclusive content made for the followers of Oitswilliam Pang. Exclusive content includes but not limited to alpha-stage early access, current Klipper-ran printers' configuration files and spectate anywhere in Sheer Dedicated Server in Minecraft. Please refer to Alpha-stage early access section. This will not change to paid donator perks if ever available.<br id="i4jz6d9"/><br id="i95qcks"/>Only followers can chat with Oitswilliam Pang beyond official / technical support, unless during livestreams or if explicitly specified. Explicit specification includes actually interviewing.<br id="i1xwn5n"/><br id="ir62yc2"/>There are exclusive content solutions made for the companies whose knew who Oitswilliam Pang is, through Passivepromo and Activepromo, please refer to the sponsorship policy for the information.<br id="imddnyu"/><br id="i4wuynu"/>For exclusive perks in OITSWILLIAM PANG Discord chat server, although we are very appreciated when users show support by boosting the chat server, there are no exclusive perks for Nitro boosters on OITSWILLIAM PANG Discord chat server.<br id="ierk98"/><br id="izh0uk"/>Updated on July 29, 2026.<br id="iwqabj"/></div></div><FOOTER id="footer-2-2" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px; height: 0px">
+        <div class="inner">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="index.html" class="">Home</a>
-        <a href="/blogs" class="">Blog</a>
+          <div class="nav_links">
+            <div class="main_categories">
+              <a href="hardware.html" class="">Hardware</a>
+              <a href="media.html" class="">Media</a>
+              <a href="minecraft-content.html" class="">For Minecraft</a>
+              <a href="support.html" class="">Support</a>
+            </div>
         <br>
-        <h2>Main categories</h2>
-        <a href="hardware.html" class="">Hardware</a>
-        <a href="media.html" class="">Media</a>
-        <a href="minecraft-content.html" class="">For Minecraft</a>
-        <a href="support.html" class="">Support</a>
+        <a href="/blogs" class="">Blog</a>
         <br>
         <h2>About</h2>
         <a href="owned-3d-printers.html" class="">Owned 3D printers</a>
@@ -346,6 +414,7 @@ function closeNav() {
         <h2>Usage Policies</h2>
         <a href="terms-of-use.html" class="">Terms of Use</a>
         <a href="sheer-dedicated-server-usage-policy.html" class="">SDS Usage Policy</a>
+          </div>
     </div>
 </div>
 <div id="izp9zr3-9" class="footer-nav--container"><div id="ijpscfp-3-2" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-3-2">Main categories</H3><P id="iejg7kj-4-2"><A href="./hardware.html" id="ia0ytdj-4-2">Hardware</A></P><P id="iejg7kj-2-5-2"><A href="./media.html" id="ia0ytdj-2-5-2">Media</A></P><P id="iejg7kj-2-3-4-2"><A href="./minecraft-content.html" id="ia0ytdj-2-3-4-2">For Minecraft</A></P><P id="iejg7kj-2-2-3-2"><A href="./support.html" id="ia0ytdj-2-2-2-2">Support</A></P><H3 id="iha1ect-4-2">Featured projects<br id="ig51bx7-3-2"/></H3><P id="iejg7kj-2-3-2-5-2"><A href="./interview-with-oitswilliam.html" id="ia0ytdj-2-3-2-5-2">Interview with Oitswilliam<br id="i2rs205-5-2"/></A></P><P id="iejg7kj-2-3-2-3-3-2"><A href="./oitswilliamv2.html" id="ia0ytdj-2-3-2-3-3-2">OitswilliamV2<br id="i2rs205-3-3-2"/></A></P><P id="iejg7kj-2-3-2-2-3-2"><A href="./oitswilliamv0.html" id="ia0ytdj-2-3-2-2-3-2">OITSWILLIAMV0<br id="i2rs205-2-3-2"/></A></P></div><div id="ijpscfp-2-2-2" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-2-2-2">About</H3><P id="iejg7kj-3-2-2"><A href="./owned-3d-printers.html" id="ia0ytdj-3-2-2">Owned 3D printers</A></P><P id="iejg7kj-2-4-2-2"><A href="./rigs.html" id="ia0ytdj-2-4-2-2">Rigs</A></P><P id="iejg7kj-2-3-3-2-2"><A href="./events.html" id="ia0ytdj-2-3-3-2-2">Future events</A></P><P id="iejg7kj-2-2-2-2-2"></P><H3 id="iha1ect-3-2-2">Using Oitswilliam's products<br id="ig51bx7-2-2-2"/></H3><P id="iejg7kj-2-3-2-4-2-2"><A href="./terms-of-use.html" id="ia0ytdj-2-3-2-4-2-2">Terms of Use<br id="i2rs205-4-2-2"/></A></P><P id="iejg7kj-2-3-2-3-2-2-2"><A href="./oitswilliam-pang-minecraft-maps-and-legacy-projects-policies.html" id="ia0ytdj-2-3-2-3-2-2-2">Oitswilliam's MC Maps Policy<br id="i2rs205-3-2-2-2"/></A></P><P id="iejg7kj-2-3-2-2-2-2-2"><A href="./sheer-dedicated-server-usage-policy.html" id="ia0ytdj-2-3-2-2-2-2-2">SDS Usage Policy<br id="i2rs205-2-2-2-2"/></A></P></div></div><div id="i12iczf-2-2"><H2 id="ifmc82p">Follow Oitswilliam Pang now on:</H2><div id="follow-on-platforms" class="social-media-icon-list">
@@ -438,6 +507,23 @@ function closeNav() {
     <a href="https://github.com/Bunny350/Bunny350.github.io/blob/main/LICENSE" class="" target="_blank">Licenses</a>
 
     <script>
+    // initialize the link just so if js was disabled home link will always be there
+    function changeBrandLinkByResize() {
+        const homeLink = document.querySelector(".topnav").children[0];
+          const width = window.innerWidth
+          if (width > 480) {
+            if (menuOpen) {
+              closeNav()
+            } else {
+              homeLink.href = "index.html";
+            }
+          } else {
+              homeLink.href = "#";
+            }
+        }
+      changeBrandLinkByResize();
+    window.addEventListener("resize", changeBrandLinkByResize);
+      
     const makecurrentd = new Date();
     let monthcheck = makecurrentd.getMonth();
     let daycheck = makecurrentd.getDate();

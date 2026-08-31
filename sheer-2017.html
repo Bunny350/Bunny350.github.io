@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en-us">
 <head>
 <meta charset="UTF-8">
 
@@ -8,7 +8,6 @@
 <style>
   @import "./assets/latofonts.css";
   /* @import "festive.css"; */
-  @import "css/testing.css";
 
 :root {
     --oiwp-web-base: #f1f1f1;
@@ -207,40 +206,56 @@
     
   }
   
-/* footer from older version, will be updated asap unless i go lz */
+/* top navigation */
   
-    @media only screen and (min-width: 480px) {
-      .openbtn {
-        display: none
-      }
+  .topnav a {
+      z-index: 2;
   }
   
   .sidepanel .closebtn {
-  position: absolute;
   text-align: right;
-  top: 0;
-  padding: 8px 0px 8px 80%;
+  top: 0px;
+  padding: 0px;
   text-decoration: none;
   border-style: none;
   font-size: 36px;
   }
   
-  div.sidepanel {
+    div.sidepanel {
+    border-radius: 60px;
     width: 0;
+    height: 0;
+    filter: blur(3px);
     position: fixed;
+    display: none;
     z-index: 1;
-    height: 100%;
-    top: 0px;
-    left: 0;
-    background-color: var(--oiwp-web-bg);
-    overflow-x: hidden;
+    top: -150px;
+    background-color: rgba(240, 240, 240, 0.8);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
     white-space: nowrap;
-    transition: 0.3s;
+    justify-content: center;
+    align-content: center;
+    transition: width 0.5s cubic-bezier(0, 0, 0.1, 1), height 0.5s cubic-bezier(0, 0, 0.1, 1), top 0.15s linear, filter 0.4s cubic-bezier(0, 0, 0.4, 1);
   }
+
+    div.sidepanel.open {
+        width: calc(90% + 0px);
+        height: calc(90% + 0px);
+        filter: blur(0px);
+        border-radius: 16px
+    }
+    
+    @media only screen and (max-width: 480px) {
+      div.sidepanel.open {
+          width: calc(100% + 0px);
+          height: calc(100% + 0px)
+      }
+  }
+
   
   div.sidepanel a {
-    padding: 8px 8px 8px 32px;
-    margin-left: 30px;
+      padding: 8px;
     text-decoration: underline;
     color: var(--oiwp-web-gray);
     font-size: 25px;
@@ -250,40 +265,92 @@
   }
   
   div.sidepanel .inner {
-  overflow-y: scroll;
-  margin-top: 60px;
   padding-bottom: 80px;
+  min-width: 90vw;
+  max-width: 1200px;
+  min-height: 90vh;
+  max-height: 800px;
+  margin-left: 24px;
+  margin-right: 24px;
+  overflow: hidden
   }
+    div.sidepanel .nav_links {
+        overflow-y: scroll;
+        height: 100%
+    }
+    
+    div.sidepanel .nav_links .main_categories {
+     display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    div.sidepanel .nav_links .main_categories a {
+    color: #000;
+     text-decoration: none;
+     font-weight: bold;
+     padding: 12px;
+     margin: 4px;
+     border-radius: 12px
+     
+    }
+    div.sidepanel .nav_links .main_categories a:hover {
+        background-color: #e6e6e6;
+        box-shadow: 0 0 3px 0px #4d4d4d;
+    }
   
 </style>
 
 <script>
+  var menuOpen = false;
   function openNav() {
-    window.scrollTo(0, 0);
-    // one person created websites are sometimes lazy
-    document.getElementById("sidemenu").style.width = "100%";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "scale(0.85)";
-    }
-    window.scrollTo(0, 0);
-    document.body.style.overflow = "hidden";
-    // if any scroll is attempted,
-    // set this to the previous value
-    window.onscroll = function() {
+      const homeLink = document.querySelector(".topnav").children[0];
+      const sideMenu = document.getElementById("sidemenu");
+      if (!menuOpen) {
         window.scrollTo(0, 0);
+        sideMenu.style.display = "flex";
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        setTimeout(() => {
+            sideMenu.style.top = "0px";
+            homeLink.href = "index.html";
+            }, 40);
+        setTimeout(() => {
+        // one person created websites are sometimes lazy
+        sideMenu.style.width = null;
+        sideMenu.style.height = null;
+        sideMenu.classList.add("open");
+        menuOpen = true
+        }, 130);
+        window.scrollTo(0, 0);
+        document.body.style.overflow = "hidden";
+        // if any scroll is attempted,
+        // set this to the previous value
+        window.onscroll = function() {
+            window.scrollTo(0, 0);
+        }
     }
 }
 
 function closeNav() {
-    document.body.style.overflow = null;
-    document.getElementById("sidemenu").style.width = "0";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "";
+    const homeLink = document.querySelector(".topnav").children[0];
+    const sideMenu = document.getElementById("sidemenu")
+    if (menuOpen) {
+        document.body.style.overflow = null;
+        sideMenu.classList.remove("open");
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        sideMenu.style.top = "-150px";
+        homeLink.href = "#";
+        sideMenu.style.transition = "width 0.2s cubic-bezier(0, 0, 0, 1), height 0.2s cubic-bezier(0, 0, 0, 1), top 0.15s linear";
+        setTimeout(() => {
+            sideMenu.style.display = "none";
+            sideMenu.style.transition = null;
+            menuOpen = false
+            }, 400);
+        window.onscroll = function() {};
     }
-    window.onscroll = function() {};
 }
+
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -292,7 +359,7 @@ function closeNav() {
 <link rel="icon" href="assets/oiwp-favicon.png" />
 <meta name="description" property="description" content="Sheer 2017 - a creative world hosted by Oitswilliam Pang for users to surf."/>
 </head>
-<body id="izz36n"><HEADER id="ij3fwt-2-9"><div id="top-nav-all-2-9" class="topnav"><div id="i2x0jq1"><button class="openbtn" onclick="openNav()">☰</button></div><a href="index.html">
+<body id="izz36n"><HEADER id="ij3fwt-2-9"><div id="top-nav-all-2-9" class="topnav"><a href="index.html" onclick="openNav()">
   <svg version="1.1" width="200px" viewBox="0 0 436 72" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
    <defs>
     <linearGradient id="driving-bar" x1="4" x2="435.97" y1="17.383" y2="17.383" gradientUnits="userSpaceOnUse">
@@ -341,6 +408,7 @@ function closeNav() {
   <div class="innerlayer section" style="flex: 2">
     <div id="joining" class="tabcontent section" style="display: block;">
         <h2>How can I join Sheer Dedicated Server?</h2>
+      <p>We are considered making Sheer 2017 available to download to followers of Oitswilliam Pang. Stay tuned by following Oitswilliam on Facebook, Instagram and YouTube, and <a href="/alpha-ea.html"> joining in alpha-EA.</a></p>
         <p>
             To join Sheer Dedicated Server, you must be a follower of Oitswilliam Pang in at least one platform, know who Oitswilliam Pang is (most specifically profession and using type of 3D software) and is a member of OITSWILLIAM PANG Discord chat server. You can then fill the request by clicking <b>join now</b> and join any follower-exclusive perks you like, including <a href="alpha-ea.html">alpha-EA</a>, but follower-exclusive badge is mandatory. If the request has passed, you will be given the SDS' address via DM in either Facebook, X or Discord, and you have to join in order to complete the request. The method may change overtime, such as we may expose SDS' address within the form instead of DM'ing SDS' address.
             </p>
@@ -553,17 +621,18 @@ document.getElementById("defaultOpen").click();
         <sup>5</sup>
         : Requires joining to OITSWILLIAM PANG Discord chat server and perks access form.
     </div>
-</div></div><FOOTER id="footer-2-15" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px">
-    <div class="inner">
+</div></div><FOOTER id="footer-2-15" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px; height: 0px">
+        <div class="inner">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="index.html" class="">Home</a>
-        <a href="/blogs" class="">Blog</a>
+          <div class="nav_links">
+            <div class="main_categories">
+              <a href="hardware.html" class="">Hardware</a>
+              <a href="media.html" class="">Media</a>
+              <a href="minecraft-content.html" class="">For Minecraft</a>
+              <a href="support.html" class="">Support</a>
+            </div>
         <br>
-        <h2>Main categories</h2>
-        <a href="hardware.html" class="">Hardware</a>
-        <a href="media.html" class="">Media</a>
-        <a href="minecraft-content.html" class="">For Minecraft</a>
-        <a href="support.html" class="">Support</a>
+        <a href="/blogs" class="">Blog</a>
         <br>
         <h2>About</h2>
         <a href="owned-3d-printers.html" class="">Owned 3D printers</a>
@@ -571,6 +640,7 @@ document.getElementById("defaultOpen").click();
         <h2>Usage Policies</h2>
         <a href="terms-of-use.html" class="">Terms of Use</a>
         <a href="sheer-dedicated-server-usage-policy.html" class="">SDS Usage Policy</a>
+          </div>
     </div>
 </div>
 <div id="izp9zr3-8" class="footer-nav--container"><div id="ijpscfp-3-4" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-3-15">Main categories</H3><P id="iejg7kj-4-15"><A href="./hardware.html" id="ia0ytdj-4-15">Hardware</A></P><P id="iejg7kj-2-5-15"><A href="./media.html" id="ia0ytdj-2-5-15">Media</A></P><P id="iejg7kj-2-3-4-15"><A href="./minecraft-content.html" id="ia0ytdj-2-3-4-15">For Minecraft</A></P><P id="iejg7kj-2-2-3-15"><A href="./support.html" id="ia0ytdj-2-2-2-15">Support</A></P><H3 id="iha1ect-4-15">Featured projects<br id="ig51bx7-3-15"/></H3><P id="iejg7kj-2-3-2-5-15"><A href="./interview-with-oitswilliam.html" id="ia0ytdj-2-3-2-5-15">Interview with Oitswilliam<br id="i2rs205-5-15"/></A></P><P id="iejg7kj-2-3-2-3-3-15"><A href="./oitswilliamv2.html" id="ia0ytdj-2-3-2-3-3-15">OitswilliamV2<br id="i2rs205-3-3-15"/></A></P><P id="iejg7kj-2-3-2-2-3-15"><A href="./oitswilliamv0.html" id="ia0ytdj-2-3-2-2-3-15">OITSWILLIAMV0<br id="i2rs205-2-3-15"/></A></P></div><div id="ijpscfp-2-2-4" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-2-2-15">About</H3><P id="iejg7kj-3-2-15"><A href="./owned-3d-printers.html" id="ia0ytdj-3-2-15">Owned 3D printers</A></P><P id="iejg7kj-2-4-2-15"><A href="./rigs.html" id="ia0ytdj-2-4-2-15">Rigs</A></P><P id="iejg7kj-2-3-3-2-15"><A href="./events.html" id="ia0ytdj-2-3-3-2-15">Future events</A></P><P id="iejg7kj-2-2-2-2-15"></P><H3 id="iha1ect-3-2-15">Using Oitswilliam's products<br id="ig51bx7-2-2-15"/></H3><P id="iejg7kj-2-3-2-4-2-15"><A href="./terms-of-use.html" id="ia0ytdj-2-3-2-4-2-15">Terms of Use<br id="i2rs205-4-2-15"/></A></P><P id="iejg7kj-2-3-2-3-2-2-15"><A href="./oitswilliam-pang-minecraft-maps-and-legacy-projects-policies.html" id="ia0ytdj-2-3-2-3-2-2-15">Oitswilliam's MC Maps Policy<br id="i2rs205-3-2-2-15"/></A></P><P id="iejg7kj-2-3-2-2-2-2-15"><A href="./sheer-dedicated-server-usage-policy.html" id="ia0ytdj-2-3-2-2-2-2-15">SDS Usage Policy<br id="i2rs205-2-2-2-15"/></A></P></div></div><div id="i12iczf-2-15"><H2 id="imjgvrl">Follow Oitswilliam Pang now on:</H2><div id="follow-on-platforms" class="social-media-icon-list">
@@ -663,6 +733,23 @@ document.getElementById("defaultOpen").click();
     <a href="https://github.com/Bunny350/Bunny350.github.io/blob/main/LICENSE" class="" target="_blank">Licenses</a>
 
     <script>
+    // initialize the link just so if js was disabled home link will always be there
+    function changeBrandLinkByResize() {
+        const homeLink = document.querySelector(".topnav").children[0];
+          const width = window.innerWidth
+          if (width > 480) {
+            if (menuOpen) {
+              closeNav()
+            } else {
+              homeLink.href = "index.html";
+            }
+          } else {
+              homeLink.href = "#";
+            }
+        }
+      changeBrandLinkByResize();
+    window.addEventListener("resize", changeBrandLinkByResize);
+      
     const makecurrentd = new Date();
     let monthcheck = makecurrentd.getMonth();
     let daycheck = makecurrentd.getDate();

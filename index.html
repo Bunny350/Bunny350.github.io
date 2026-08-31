@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en-us">
 <head>
 <meta charset="UTF-8">
 
@@ -8,7 +8,6 @@
 <style>
   @import "./assets/latofonts.css";
   /* @import "festive.css"; */
-  @import "css/testing.css";
 
 :root {
     --oiwp-web-base: #f1f1f1;
@@ -207,40 +206,56 @@
     
   }
   
-/* footer from older version, will be updated asap unless i go lz */
+/* top navigation */
   
-    @media only screen and (min-width: 480px) {
-      .openbtn {
-        display: none
-      }
+  .topnav a {
+      z-index: 2;
   }
   
   .sidepanel .closebtn {
-  position: absolute;
   text-align: right;
-  top: 0;
-  padding: 8px 0px 8px 80%;
+  top: 0px;
+  padding: 0px;
   text-decoration: none;
   border-style: none;
   font-size: 36px;
   }
   
-  div.sidepanel {
+    div.sidepanel {
+    border-radius: 60px;
     width: 0;
+    height: 0;
+    filter: blur(3px);
     position: fixed;
+    display: none;
     z-index: 1;
-    height: 100%;
-    top: 0px;
-    left: 0;
-    background-color: var(--oiwp-web-bg);
-    overflow-x: hidden;
+    top: -150px;
+    background-color: rgba(240, 240, 240, 0.8);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
     white-space: nowrap;
-    transition: 0.3s;
+    justify-content: center;
+    align-content: center;
+    transition: width 0.5s cubic-bezier(0, 0, 0.1, 1), height 0.5s cubic-bezier(0, 0, 0.1, 1), top 0.15s linear, filter 0.4s cubic-bezier(0, 0, 0.4, 1);
   }
+
+    div.sidepanel.open {
+        width: calc(90% + 0px);
+        height: calc(90% + 0px);
+        filter: blur(0px);
+        border-radius: 16px
+    }
+    
+    @media only screen and (max-width: 480px) {
+      div.sidepanel.open {
+          width: calc(100% + 0px);
+          height: calc(100% + 0px)
+      }
+  }
+
   
   div.sidepanel a {
-    padding: 8px 8px 8px 32px;
-    margin-left: 30px;
+      padding: 8px;
     text-decoration: underline;
     color: var(--oiwp-web-gray);
     font-size: 25px;
@@ -250,40 +265,92 @@
   }
   
   div.sidepanel .inner {
-  overflow-y: scroll;
-  margin-top: 60px;
   padding-bottom: 80px;
+  min-width: 90vw;
+  max-width: 1200px;
+  min-height: 90vh;
+  max-height: 800px;
+  margin-left: 24px;
+  margin-right: 24px;
+  overflow: hidden
   }
+    div.sidepanel .nav_links {
+        overflow-y: scroll;
+        height: 100%
+    }
+    
+    div.sidepanel .nav_links .main_categories {
+     display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    div.sidepanel .nav_links .main_categories a {
+    color: #000;
+     text-decoration: none;
+     font-weight: bold;
+     padding: 12px;
+     margin: 4px;
+     border-radius: 12px
+     
+    }
+    div.sidepanel .nav_links .main_categories a:hover {
+        background-color: #e6e6e6;
+        box-shadow: 0 0 3px 0px #4d4d4d;
+    }
   
 </style>
 
 <script>
+  var menuOpen = false;
   function openNav() {
-    window.scrollTo(0, 0);
-    // one person created websites are sometimes lazy
-    document.getElementById("sidemenu").style.width = "100%";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "scale(0.85)";
-    }
-    window.scrollTo(0, 0);
-    document.body.style.overflow = "hidden";
-    // if any scroll is attempted,
-    // set this to the previous value
-    window.onscroll = function() {
+      const homeLink = document.querySelector(".topnav").children[0];
+      const sideMenu = document.getElementById("sidemenu");
+      if (!menuOpen) {
         window.scrollTo(0, 0);
+        sideMenu.style.display = "flex";
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        setTimeout(() => {
+            sideMenu.style.top = "0px";
+            homeLink.href = "index.html";
+            }, 40);
+        setTimeout(() => {
+        // one person created websites are sometimes lazy
+        sideMenu.style.width = null;
+        sideMenu.style.height = null;
+        sideMenu.classList.add("open");
+        menuOpen = true
+        }, 130);
+        window.scrollTo(0, 0);
+        document.body.style.overflow = "hidden";
+        // if any scroll is attempted,
+        // set this to the previous value
+        window.onscroll = function() {
+            window.scrollTo(0, 0);
+        }
     }
 }
 
 function closeNav() {
-    document.body.style.overflow = null;
-    document.getElementById("sidemenu").style.width = "0";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "";
+    const homeLink = document.querySelector(".topnav").children[0];
+    const sideMenu = document.getElementById("sidemenu")
+    if (menuOpen) {
+        document.body.style.overflow = null;
+        sideMenu.classList.remove("open");
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        sideMenu.style.top = "-150px";
+        homeLink.href = "#";
+        sideMenu.style.transition = "width 0.2s cubic-bezier(0, 0, 0, 1), height 0.2s cubic-bezier(0, 0, 0, 1), top 0.15s linear";
+        setTimeout(() => {
+            sideMenu.style.display = "none";
+            sideMenu.style.transition = null;
+            menuOpen = false
+            }, 400);
+        window.onscroll = function() {};
     }
-    window.onscroll = function() {};
 }
+
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -354,7 +421,7 @@ function closeNav() {
    </g>
   </svg>
 </a>
-<div id="top-nav-main-cats-homepage" class="header-nav"><A href="./hardware.html" id="main-category-hardware-2" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-2" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-2" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-2" class="mainnav">Support<br id="i4kch"/></A></div><div id="nav-homepage-spacing" class="landscape homepage-spacing"></div></DIV></div><div id="banner-ss26" class="feature--whole force-white-text"><div id="iuzsnny" class="feature--lefthand"><div id="ili6uis"><div id="icq4hn7"><H1 id="ila3uzf">Summer Smash 2026</H1><br id="i5iarwm"/>Hardware, fun and mod<br id="ioiem98"/>Smashing this August.</div><div id="ie2tcb6" class="nav-list-center"><A href="#tab-social-platforms" id="iigsf7o" class="feat-link">Follow now</A></div></div></div></div><SECTION id="ib5i55" class="feature--whole force-white-text"><div id="irdz37" class="feature--lefthand"><div id="iqpw3i"><div id="ipvipp"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div id="top-nav-main-cats-homepage" class="header-nav"><A href="./hardware.html" id="main-category-hardware-2" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-2" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-2" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-2" class="mainnav">Support<br id="i4kch"/></A></div><div id="nav-homepage-spacing" class="landscape homepage-spacing"></div></DIV></div><SECTION id="ib5i55" class="feature--whole force-white-text"><div id="irdz37" class="feature--lefthand"><div id="iqpw3i"><div id="ipvipp"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
@@ -433,17 +500,18 @@ function closeNav() {
            id="path2538" />
       </g>
     </g>
-  </svg><div id="iniiyl" class="title-center">Now with swooshing filter - EXS.<br id="ilquno"/>Made for Voron 0.2.</div></div><div id="iz7f6e-3-2" class="nav-list-center backdrop-blur-override"><A href="./oitswilliamv0.html" id="ijjgfj-4-2" class="feat-link const-bg-gray">Learn more</A><a href="https://github.com/Bunny350/OITSWILLIAMV0" id="ijjgfj-2-2-2" class="feat-link const-bg-gray" target="_blank">Obtain</a></div></div><div id="featured-hd-desiccant"><div id="i02xwk"><H1 id="featured-title-hd-desiccant">HD desiccant</H1><P id="ivnpin-2" class="title-center">Desiccant Holder Oitswilliam Style.<br id="iwr6bj"/>The filament desiccant holder that tests printers</P></div><div id="iz7f6e-3" class="nav-list-center"><a href="https://makerworld.com/models/2565724-hd-desiccant-holder" id="ijjgfj-2-2" class="feat-link const-bg-gray" target="_blank">MakerWorld</a><a href="https://www.printables.com/model/1743499-hd-desiccant-holder" id="ijjgfj-2-2-4" class="feat-link const-bg-gray" target="_blank">Printables</a><a href="https://github.com/Bunny350/HD-desiccant" id="ijjgfj-2-2-3" class="feat-link const-bg-gray" target="_blank">GitHub</a></div></div></SECTION><SECTION id="about-oitswilliam" class="feature--center"><div id="isfnb8"><H1 id="i25hwg" class="title-center">Who is Oitswilliam Pang?</H1><P id="ib7t1m" class="text-center">Oitswilliam Pang (real name: Pang William) is a maker, or actually, banger CAD designer who makes projects that pushes boundaries and mostly free and open to obtain, with interfaces that are intuitive and brings joy.<br id="idwqfi"/><br id="iq5xwb"/>He became listed in November 2012 with debut of his Facebook account, hardware is his dream. Now he has 2 main product categories, official products and mods for other community.<br id="iv2yzl"/><br id="il9x5t"/>Oitswilliam will be the leader of reshaping the UX on 3D printers.<br id="iz7vr9"/><br id="iygiq6"/>He is a Minecrafter with the respective gamer-tags for Java and Bedrock, Bunny_350 and Bunny350, but now in part-time.<br id="im388p"/><br id="i0y0tl"/>In case you don't know, he is also a concept artist, because he sometimes lose his minds trying to design it through CAD, isn't that true? And one person-operation is no longer enough, so Oitswilliam decide to invite the people around the industry, even if different, not generative AI.<br id="i12f5o"/></P></div></SECTION><SECTION id="following-active-platform" class="feature-center"><div id="tab-social-platforms"><P id="ib7t1m-2" class="text-center"><h1 id="i8dhtmo">Social media platforms</h1>Note: may contain explicit languages. For OIWP hardware and livestreams on Facebook, follow @officialbunny350.<br id="i687elo"/><br id="i4ogdoq"/></P><div id="ihkeobp"><iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwilliampang.3363%2F&amp;tabs=timeline&amp;width=500&amp;height=500&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;locale=en_US&amp;show_facepile=true&amp;&amp;appId" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="false" allow="autoplay; encrypted-media; picture-in-picture; web-share"></iframe></div><div id="follow-platform-box" class="social-platform-box"><div id="is821g"><H3 id="ieel9vw">Oitswilliam is active on own Facebook account. Follow now.<br id="i3d6dm9"/>Also seen on other platforms as well:</H3><div id="i85qzay"><a href="https://www.facebook.com/williampang.3363" id="fb-account-link" class="oiwp-button platform-link" target="_blank">Facebook account<br id="i5c6p6"/></a><a href="https://www.facebook.com/officialbunny350" id="fb-page-linktest" class="oiwp-button platform-link" target="_blank">Facebook page<br id="iar0i5"/></a><a href="https://www.instagram.com/william86745" id="instagram-link" class="oiwp-button platform-link" target="_blank">Instagram</a><a href="https://www.youtube.com/@oitswilliam" id="youtube-link" class="oiwp-button platform-link" target="_blank">YouTube</a></div></div></div></div></SECTION><SECTION id="following-active-platform-2" class="feature-center"><div id="chat-groups-2" class="social-platform-box"><H1 id="ib7t1m-2-3-2" class="text-center">Join Oitswilliam-hosted chat groups</H1><div id="is821g-2-2"><a href="https://www.facebook.com/groups/oitswilliampang" id="fb-group-link" class="oiwp-button platform-link" target="_blank">Facebook group<br id="i5c6p6-2-2"/></a><a href="https://discord-server.oitswilliam.com" id="discord-chat-server-link" class="oiwp-button platform-link" target="_blank">Discord chat server<br id="iar0i5-2-2-2"/></a></div></div></SECTION><script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script><SECTION id="ibxqtl" class="feature--center"><div id="blogs-panel" class="social-platform-box"><div id="ihqhtk" class="nav-list-center"><P id="i91vyz" class="text-center">Oitswilliam Pang</P><H1 id="i91vyz-2" class="text-center">Blog<br id="ic8ro4"/></H1></div><div id="ievmfv" class="nav-list-center"><A href="/blogs" id="i91vyz-2-2" class="feat-link">Surf and read<br id="ic8ro4-2"/></A></div></div></SECTION><FOOTER id="footer" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px">
-    <div class="inner">
+  </svg><div id="iniiyl" class="title-center">Now with swooshing filter - EXS.<br id="ilquno"/>Made for Voron 0.2.</div></div><div id="iz7f6e-3-2" class="nav-list-center backdrop-blur-override"><A href="./oitswilliamv0.html" id="ijjgfj-4-2" class="feat-link const-bg-gray">Learn more</A><a href="https://github.com/Bunny350/OITSWILLIAMV0" id="ijjgfj-2-2-2" class="feat-link const-bg-gray" target="_blank">Obtain</a></div></div><div id="featured-hd-desiccant"><div id="i02xwk"><H1 id="featured-title-hd-desiccant">HD desiccant</H1><P id="ivnpin-2" class="title-center">Desiccant Holder Oitswilliam Style.<br id="iwr6bj"/>The filament desiccant holder that tests printers</P></div><div id="iz7f6e-3" class="nav-list-center"><a href="https://makerworld.com/models/2565724-hd-desiccant-holder" id="ijjgfj-2-2" class="feat-link const-bg-gray" target="_blank">MakerWorld</a><a href="https://www.printables.com/model/1743499-hd-desiccant-holder" id="ijjgfj-2-2-4" class="feat-link const-bg-gray" target="_blank">Printables</a><a href="https://github.com/Bunny350/HD-desiccant" id="ijjgfj-2-2-3" class="feat-link const-bg-gray" target="_blank">GitHub</a></div></div></SECTION><SECTION id="about-oitswilliam" class="feature--center"><div id="isfnb8"><H1 id="i25hwg" class="title-center">Who is Oitswilliam Pang?</H1><P id="ib7t1m" class="text-center">Oitswilliam Pang (real name: Pang William) is a maker, or actually, banger CAD designer who makes projects that pushes boundaries and mostly free and open to obtain, with interfaces that are intuitive and brings joy.<br id="idwqfi"/><br id="iq5xwb"/>He became listed in November 2012 with debut of his Facebook account, hardware is his dream. Now he has 2 main product categories, official products and mods for other community.<br id="iv2yzl"/><br id="il9x5t"/>Oitswilliam will be the leader of reshaping the UX on 3D printers.<br id="iz7vr9"/><br id="iygiq6"/>He is a Minecrafter with the respective gamer-tags for Java and Bedrock, Bunny_350 and Bunny350, but now in part-time.<br id="im388p"/><br id="i0y0tl"/>In case you don't know, he is also a concept artist, because he sometimes lose his minds trying to design it through CAD, isn't that true? And one person-operation is no longer enough, so Oitswilliam decide to invite the people around the industry, even if different, not generative AI.<br id="i12f5o"/></P></div></SECTION><SECTION id="following-active-platform" class="feature-center"><div id="tab-social-platforms"><P id="ib7t1m-2" class="text-center"><h1 id="i8dhtmo">Social media platforms</h1>Note: may contain explicit languages. For OIWP hardware and livestreams on Facebook, follow @officialbunny350.<br id="i687elo"/><br id="i4ogdoq"/></P><div id="ihkeobp"><iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwilliampang.3363%2F&amp;tabs=timeline&amp;width=500&amp;height=500&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;locale=en_US&amp;show_facepile=true&amp;&amp;appId" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="false" allow="autoplay; encrypted-media; picture-in-picture; web-share"></iframe></div><div id="follow-platform-box" class="social-platform-box"><div id="is821g"><H3 id="ieel9vw">Oitswilliam is active on own Facebook account. Follow now.<br id="i3d6dm9"/>Also seen on other platforms as well:</H3><div id="i85qzay"><a href="https://www.facebook.com/williampang.3363" id="fb-account-link" class="oiwp-button platform-link" target="_blank">Facebook account<br id="i5c6p6"/></a><a href="https://www.facebook.com/officialbunny350" id="fb-page-linktest" class="oiwp-button platform-link" target="_blank">Facebook page<br id="iar0i5"/></a><a href="https://www.instagram.com/william86745" id="instagram-link" class="oiwp-button platform-link" target="_blank">Instagram</a><a href="https://www.youtube.com/@oitswilliam" id="youtube-link" class="oiwp-button platform-link" target="_blank">YouTube</a></div></div></div></div></SECTION><SECTION id="following-active-platform-2" class="feature-center"><div id="chat-groups-2" class="social-platform-box"><H1 id="ib7t1m-2-3-2" class="text-center">Join Oitswilliam-hosted chat groups</H1><div id="is821g-2-2"><a href="https://www.facebook.com/groups/oitswilliampang" id="fb-group-link" class="oiwp-button platform-link" target="_blank">Facebook group<br id="i5c6p6-2-2"/></a><a href="https://discord-server.oitswilliam.com" id="discord-chat-server-link" class="oiwp-button platform-link" target="_blank">Discord chat server<br id="iar0i5-2-2-2"/></a></div></div></SECTION><script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script><SECTION id="ibxqtl" class="feature--center"><div id="blogs-panel" class="social-platform-box"><div id="ihqhtk" class="nav-list-center"><P id="i91vyz" class="text-center">Oitswilliam Pang</P><H1 id="i91vyz-2" class="text-center">Blog<br id="ic8ro4"/></H1></div><div id="ievmfv" class="nav-list-center"><A href="/blogs" id="i91vyz-2-2" class="feat-link">Surf and read<br id="ic8ro4-2"/></A></div></div></SECTION><FOOTER id="footer" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px; height: 0px">
+        <div class="inner">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="index.html" class="">Home</a>
-        <a href="/blogs" class="">Blog</a>
+          <div class="nav_links">
+            <div class="main_categories">
+              <a href="hardware.html" class="">Hardware</a>
+              <a href="media.html" class="">Media</a>
+              <a href="minecraft-content.html" class="">For Minecraft</a>
+              <a href="support.html" class="">Support</a>
+            </div>
         <br>
-        <h2>Main categories</h2>
-        <a href="hardware.html" class="">Hardware</a>
-        <a href="media.html" class="">Media</a>
-        <a href="minecraft-content.html" class="">For Minecraft</a>
-        <a href="support.html" class="">Support</a>
+        <a href="/blogs" class="">Blog</a>
         <br>
         <h2>About</h2>
         <a href="owned-3d-printers.html" class="">Owned 3D printers</a>
@@ -451,6 +519,7 @@ function closeNav() {
         <h2>Usage Policies</h2>
         <a href="terms-of-use.html" class="">Terms of Use</a>
         <a href="sheer-dedicated-server-usage-policy.html" class="">SDS Usage Policy</a>
+          </div>
     </div>
 </div>
 <div id="izp9zr3" class="footer-nav--container"><div id="ijpscfp" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2">Main categories</H3><P id="iejg7kj"><A href="./hardware.html" id="ia0ytdj">Hardware</A></P><P id="iejg7kj-2"><A href="./media.html" id="ia0ytdj-2">Media</A></P><P id="iejg7kj-2-3"><A href="./minecraft-content.html" id="ia0ytdj-2-3">For Minecraft</A></P><P id="iejg7kj-2-2"><A href="./support.html" id="ia0ytdj-2-2">Support</A></P><H3 id="iha1ect">Featured projects<br id="ig51bx7"/></H3><P id="iejg7kj-2-3-2"><A href="./interview-with-oitswilliam.html" id="ia0ytdj-2-3-2">Interview with Oitswilliam<br id="i2rs205"/></A></P><P id="iejg7kj-2-3-2-3"><A href="./oitswilliamv2.html" id="ia0ytdj-2-3-2-3">OitswilliamV2<br id="i2rs205-3"/></A></P><P id="iejg7kj-2-3-2-2"><A href="./oitswilliamv0.html" id="ia0ytdj-2-3-2-2">OITSWILLIAMV0<br id="i2rs205-2"/></A></P></div><div id="ijpscfp-2" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-2">About</H3><P id="iejg7kj-3"><A href="./owned-3d-printers.html" id="ia0ytdj-3">Owned 3D printers</A></P><P id="iejg7kj-2-4"><A href="./rigs.html" id="ia0ytdj-2-4">Rigs</A></P><P id="iejg7kj-2-3-3"><A href="./events.html" id="ia0ytdj-2-3-3">Future events</A></P><P id="iejg7kj-2-2-2"></P><H3 id="iha1ect-3">Using Oitswilliam's products<br id="ig51bx7-2"/></H3><P id="iejg7kj-2-3-2-4"><A href="./terms-of-use.html" id="ia0ytdj-2-3-2-4">Terms of Use<br id="i2rs205-4"/></A></P><P id="iejg7kj-2-3-2-3-2"><A href="./oitswilliam-pang-minecraft-maps-and-legacy-projects-policies.html" id="ia0ytdj-2-3-2-3-2">Oitswilliam's MC Maps Policy<br id="i2rs205-3-2"/></A></P><P id="iejg7kj-2-3-2-2-2"><A href="./sheer-dedicated-server-usage-policy.html" id="ia0ytdj-2-3-2-2-2">SDS Usage Policy<br id="i2rs205-2-2"/></A></P></div></div><div id="i12iczf"><H2 id="iv83idu">Follow Oitswilliam Pang now on:</H2><div id="follow-on-platforms" class="social-media-icon-list">
@@ -543,6 +612,23 @@ function closeNav() {
     <a href="https://github.com/Bunny350/Bunny350.github.io/blob/main/LICENSE" class="" target="_blank">Licenses</a>
 
     <script>
+    // initialize the link just so if js was disabled home link will always be there
+    function changeBrandLinkByResize() {
+        const homeLink = document.querySelector(".topnav").children[0];
+          const width = window.innerWidth
+          if (width > 480) {
+            if (menuOpen) {
+              closeNav()
+            } else {
+              homeLink.href = "index.html";
+            }
+          } else {
+              homeLink.href = "#";
+            }
+        }
+      changeBrandLinkByResize();
+    window.addEventListener("resize", changeBrandLinkByResize);
+      
     const makecurrentd = new Date();
     let monthcheck = makecurrentd.getMonth();
     let daycheck = makecurrentd.getDate();

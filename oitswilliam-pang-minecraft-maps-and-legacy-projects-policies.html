@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en-us">
 <head>
 <meta charset="UTF-8">
 
@@ -8,7 +8,6 @@
 <style>
   @import "./assets/latofonts.css";
   /* @import "festive.css"; */
-  @import "css/testing.css";
 
 :root {
     --oiwp-web-base: #f1f1f1;
@@ -207,40 +206,56 @@
     
   }
   
-/* footer from older version, will be updated asap unless i go lz */
+/* top navigation */
   
-    @media only screen and (min-width: 480px) {
-      .openbtn {
-        display: none
-      }
+  .topnav a {
+      z-index: 2;
   }
   
   .sidepanel .closebtn {
-  position: absolute;
   text-align: right;
-  top: 0;
-  padding: 8px 0px 8px 80%;
+  top: 0px;
+  padding: 0px;
   text-decoration: none;
   border-style: none;
   font-size: 36px;
   }
   
-  div.sidepanel {
+    div.sidepanel {
+    border-radius: 60px;
     width: 0;
+    height: 0;
+    filter: blur(3px);
     position: fixed;
+    display: none;
     z-index: 1;
-    height: 100%;
-    top: 0px;
-    left: 0;
-    background-color: var(--oiwp-web-bg);
-    overflow-x: hidden;
+    top: -150px;
+    background-color: rgba(240, 240, 240, 0.8);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
     white-space: nowrap;
-    transition: 0.3s;
+    justify-content: center;
+    align-content: center;
+    transition: width 0.5s cubic-bezier(0, 0, 0.1, 1), height 0.5s cubic-bezier(0, 0, 0.1, 1), top 0.15s linear, filter 0.4s cubic-bezier(0, 0, 0.4, 1);
   }
+
+    div.sidepanel.open {
+        width: calc(90% + 0px);
+        height: calc(90% + 0px);
+        filter: blur(0px);
+        border-radius: 16px
+    }
+    
+    @media only screen and (max-width: 480px) {
+      div.sidepanel.open {
+          width: calc(100% + 0px);
+          height: calc(100% + 0px)
+      }
+  }
+
   
   div.sidepanel a {
-    padding: 8px 8px 8px 32px;
-    margin-left: 30px;
+      padding: 8px;
     text-decoration: underline;
     color: var(--oiwp-web-gray);
     font-size: 25px;
@@ -250,40 +265,92 @@
   }
   
   div.sidepanel .inner {
-  overflow-y: scroll;
-  margin-top: 60px;
   padding-bottom: 80px;
+  min-width: 90vw;
+  max-width: 1200px;
+  min-height: 90vh;
+  max-height: 800px;
+  margin-left: 24px;
+  margin-right: 24px;
+  overflow: hidden
   }
+    div.sidepanel .nav_links {
+        overflow-y: scroll;
+        height: 100%
+    }
+    
+    div.sidepanel .nav_links .main_categories {
+     display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    div.sidepanel .nav_links .main_categories a {
+    color: #000;
+     text-decoration: none;
+     font-weight: bold;
+     padding: 12px;
+     margin: 4px;
+     border-radius: 12px
+     
+    }
+    div.sidepanel .nav_links .main_categories a:hover {
+        background-color: #e6e6e6;
+        box-shadow: 0 0 3px 0px #4d4d4d;
+    }
   
 </style>
 
 <script>
+  var menuOpen = false;
   function openNav() {
-    window.scrollTo(0, 0);
-    // one person created websites are sometimes lazy
-    document.getElementById("sidemenu").style.width = "100%";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "scale(0.85)";
-    }
-    window.scrollTo(0, 0);
-    document.body.style.overflow = "hidden";
-    // if any scroll is attempted,
-    // set this to the previous value
-    window.onscroll = function() {
+      const homeLink = document.querySelector(".topnav").children[0];
+      const sideMenu = document.getElementById("sidemenu");
+      if (!menuOpen) {
         window.scrollTo(0, 0);
+        sideMenu.style.display = "flex";
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        setTimeout(() => {
+            sideMenu.style.top = "0px";
+            homeLink.href = "index.html";
+            }, 40);
+        setTimeout(() => {
+        // one person created websites are sometimes lazy
+        sideMenu.style.width = null;
+        sideMenu.style.height = null;
+        sideMenu.classList.add("open");
+        menuOpen = true
+        }, 130);
+        window.scrollTo(0, 0);
+        document.body.style.overflow = "hidden";
+        // if any scroll is attempted,
+        // set this to the previous value
+        window.onscroll = function() {
+            window.scrollTo(0, 0);
+        }
     }
 }
 
 function closeNav() {
-    document.body.style.overflow = null;
-    document.getElementById("sidemenu").style.width = "0";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "";
+    const homeLink = document.querySelector(".topnav").children[0];
+    const sideMenu = document.getElementById("sidemenu")
+    if (menuOpen) {
+        document.body.style.overflow = null;
+        sideMenu.classList.remove("open");
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        sideMenu.style.top = "-150px";
+        homeLink.href = "#";
+        sideMenu.style.transition = "width 0.2s cubic-bezier(0, 0, 0, 1), height 0.2s cubic-bezier(0, 0, 0, 1), top 0.15s linear";
+        setTimeout(() => {
+            sideMenu.style.display = "none";
+            sideMenu.style.transition = null;
+            menuOpen = false
+            }, 400);
+        window.onscroll = function() {};
     }
-    window.onscroll = function() {};
 }
+
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -292,7 +359,7 @@ function closeNav() {
 <link rel="icon" href="assets/oiwp-favicon.png" />
 <meta name="description" property="description" content="Oitswilliam Pang - ideas from the distant future. Oitswilliam is a CAD designer and a leading UX designer for 3D printers."/>
 </head>
-<body id="iumcthy"><HEADER id="ij3fwt-2-11"><div id="top-nav-all-2-11" class="topnav"><div id="i2r6so3"><button class="openbtn" onclick="openNav()">☰</button></div><a href="index.html">
+<body id="iumcthy"><HEADER id="ij3fwt-2-11"><div id="top-nav-all-2-11" class="topnav"><a href="index.html" onclick="openNav()">
   <svg version="1.1" width="200px" viewBox="0 0 436 72" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
    <defs>
     <linearGradient id="driving-bar" x1="4" x2="435.97" y1="17.383" y2="17.383" gradientUnits="userSpaceOnUse">
@@ -327,17 +394,18 @@ function closeNav() {
     </g>
    </g>
   </svg>
-</a><div id="top-nav-main-cats-2-2-3-2-11" class="header-nav"><A href="./hardware.html" id="main-category-hardware-3-2-3-2-11" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-3-2-3-2-11" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-3-2-3-2-11" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-3-2-3-2-11" class="mainnav">Support<br id="imkpb-2-11"/></A></div><div id="nav-topnav-spacing-2-2-3-2-11" class="homepage-spacing landscape"></div></div></HEADER><div id="itr91tl"><div id="iuhhdli"><h1 id="iotlwgc">Oitswilliam Pang Minecraft Maps and Legacy Projects Policies</h1>Effective on June 15, 2026.<br id="is8543j"/><br id="iobgjv8"/>This shows lists of policies that apply to Maps and legacy projects for Minecraft that are made by Oitswilliam Pang. You may agree to this policy in order to let you download maps or legacy projects made by Oitswilliam.<br id="ih2bn7t"/><br id="ivj6sxa"/>For policies apply to Sheer Dedicated Server, you may visit <a href="./sheer-dedicated-server-usage-policy.html" id="iz4lapl">SDS Usage Policy</a>.<br id="ihk6g5k"/><h2 id="i0chxwf">Definitions</h2>There are list of definitions for this policy.<br id="i5jx8kx"/><ol id="ixmxjdl"><li id="ih2d6mf">Obtaining / downloading is a procedure when downloading Oitswilliam's Minecraft Maps or legacy projects.<br id="iwp52zi"/></li><li id="isggc3i">Legacy projects are formerly Command Creations during Bunny 350 days.<br id="i191ssh"/></li><li id="izyynil">Bunny 350 is the name for Oitswilliam Pang before June 17 of 2022.<br id="irfz32v"/></li><li id="idb90ao">Modifying is an action that basically means changing things.<br id="iy0nxwg"/></li><li id="ina6z58">Sharing is an action that means to distribute across the place.<br id="i1koqyi"/></li><li id="ixjxzcy">Used Oitswilliam Pang creations means that any of Oitswilliam Pang creations that were used by someone else after Oitswilliam Pang distributed. This includes is as simple as just visiting the world.<br id="iurd3z9"/></li><li id="ii9kg61">Unauthorized copies means that the copy of the world was distributed with links different from the official's.<br id="iqm57d1"/></li><li id="incw15r">Legacy projects are shared from Oitswilliam's Dropbox drive, however later versions may be shared from Oitswilliam's Google Drive or Planet Minecraft.<br id="idaxaib"/></li></ol><h2 id="ilzygmk">Obtaining / Downloading</h2>It's best to check how the project works before download, since some of them might corrupt or damage itself if you do something randomly.<br id="i80dwnm"/><br id="inj1tvm"/>In some maps, if you are in normal copy of the legacy project, you are not possible to change game modes.<br id="iohrknh"/><br id="iphtmw3"/>Maps created by Oitswilliam Pang may be copyrighted with the proprietary license. In legacy and sometimes obsolete projects that were not updated since or after June 17 of 2022, Oitswilliam Pang is formerly known as Bunny 350.<br id="iq3s1ho"/><br id="ip37fl5"/>Licensing for legacy projects are proprietary and you must give them an official link to the official project.<br id="i60ok3m"/><h2 id="ilm3byh">Modifying</h2>Legacy projects can be fixed, patched or modified by the followers of Oitswilliam Pang. You must be a follower of Oitswilliam Pang on Facebook, Instagram, X or subscriber on YouTube and request for a modifiable copy of such map through the <a href="./support.html" id="isfbjj1">support page</a> in which we will provide the projects with the ownership detection disabled. You may not distribute such projects to the public.<br id="iypc4ai"/><h2 id="iodbufg">Sharing</h2>You can share with the official link provided, it was only modified by our trusted contributors. Avoid sharing links that are not official, or even just redirects of the official download link.<br id="ik9zb04"/><br id="iafngme"/>Avoid sharing used Oitswilliam Pang creations. Some legacy creations has proprietary licensing system related to anti-piracy, such as ownership detection, to prevent unauthorized copies of these world.<br id="iqkzg3l"/><h2 id="in9xkhf">List of legacy projects listed as obsolete</h2><ul id="i1w89wh"><li id="i8jx83w"><a __p="undefined" href="https://bunny350phoning.fandom.com/wiki/RabbitBot" id="i2xzaci" target="_blank">RabbitBot</a> - A player controlled rabbit with just command controls<br id="i3w0e9o"/></li><ul draggable="true" id="ifq5zch"><li draggable="true" id="i95y9cg">Introduced in 2015 and released in 2016, as Oitswilliam's first step to publicly available command creations.<br draggable="true" id="i78jq8g"/></li><li draggable="true" id="ibnguev">Officially discontinued and marked development obsolete in 2023. Although users can still <a __p="undefined" href="https://www.dropbox.com/s/9va856j39efw569/RabbitBot%20Commands.txt?dl=0" id="iwu0vx2" target="_blank">get it as scraps of command lines</a>, it works until versions later JE 1.9.4.</li></ul></ul></div></div><FOOTER id="footer-2-10" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px">
-    <div class="inner">
+</a><div id="top-nav-main-cats-2-2-3-2-11" class="header-nav"><A href="./hardware.html" id="main-category-hardware-3-2-3-2-11" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-3-2-3-2-11" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-3-2-3-2-11" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-3-2-3-2-11" class="mainnav">Support<br id="imkpb-2-11"/></A></div><div id="nav-topnav-spacing-2-2-3-2-11" class="homepage-spacing landscape"></div></div></HEADER><div id="itr91tl"><div id="iuhhdli"><h1 id="iotlwgc">Oitswilliam Pang Minecraft Maps and Legacy Projects Policies</h1>Effective on June 15, 2026.<br id="is8543j"/><br id="iobgjv8"/>This shows lists of policies that apply to Maps and legacy projects for Minecraft that are made by Oitswilliam Pang. You may agree to this policy in order to let you download maps or legacy projects made by Oitswilliam.<br id="ih2bn7t"/><br id="ivj6sxa"/>For policies apply to Sheer Dedicated Server, you may visit <a href="./sheer-dedicated-server-usage-policy.html" id="iz4lapl">SDS Usage Policy</a>.<br id="ihk6g5k"/><h2 id="i0chxwf">Definitions</h2>There are list of definitions for this policy.<br id="i5jx8kx"/><ol id="ixmxjdl"><li id="ih2d6mf">Obtaining / downloading is a procedure when downloading Oitswilliam's Minecraft Maps or legacy projects.<br id="iwp52zi"/></li><li id="isggc3i">Legacy projects are formerly Command Creations during Bunny 350 days.<br id="i191ssh"/></li><li id="izyynil">Bunny 350 is the name for Oitswilliam Pang before June 17 of 2022.<br id="irfz32v"/></li><li id="idb90ao">Modifying is an action that basically means changing things.<br id="iy0nxwg"/></li><li id="ina6z58">Sharing is an action that means to distribute across the place.<br id="i1koqyi"/></li><li id="ixjxzcy">Used Oitswilliam Pang creations means that any of Oitswilliam Pang creations that were used by someone else after Oitswilliam Pang distributed. This includes is as simple as just visiting the world.<br id="iurd3z9"/></li><li id="ii9kg61">Unauthorized copies means that the copy of the world was distributed with links different from the official's.<br id="iqm57d1"/></li><li id="incw15r">Legacy projects are shared from Oitswilliam's Dropbox drive, however later versions may be shared from Oitswilliam's Google Drive or Planet Minecraft.<br id="idaxaib"/></li></ol><h2 id="ilzygmk">Obtaining / Downloading</h2>It's best to check how the project works before download, since some of them might corrupt or damage itself if you do something randomly.<br id="i80dwnm"/><br id="inj1tvm"/>In some maps, if you are in normal copy of the legacy project, you are not possible to change game modes.<br id="iohrknh"/><br id="iphtmw3"/>Maps created by Oitswilliam Pang may be copyrighted with the proprietary license. In legacy and sometimes obsolete projects that were not updated since or after June 17 of 2022, Oitswilliam Pang is formerly known as Bunny 350.<br id="iq3s1ho"/><br id="ip37fl5"/>Licensing for legacy projects are proprietary and you must give them an official link to the official project.<br id="i60ok3m"/><h2 id="ilm3byh">Modifying</h2>Legacy projects can be fixed, patched or modified by the followers of Oitswilliam Pang. You must be a follower of Oitswilliam Pang on Facebook, Instagram, X or subscriber on YouTube and request for a modifiable copy of such map through the <a href="./support.html" id="isfbjj1">support page</a> in which we will provide the projects with the ownership detection disabled. You may not distribute such projects to the public.<br id="iypc4ai"/><h2 id="iodbufg">Sharing</h2>You can share with the official link provided, it was only modified by our trusted contributors. Avoid sharing links that are not official, or even just redirects of the official download link.<br id="ik9zb04"/><br id="iafngme"/>Avoid sharing used Oitswilliam Pang creations. Some legacy creations has proprietary licensing system related to anti-piracy, such as ownership detection, to prevent unauthorized copies of these world.<br id="iqkzg3l"/><h2 id="in9xkhf">List of legacy projects listed as obsolete</h2><ul id="i1w89wh"><li id="i8jx83w"><a __p="undefined" href="https://bunny350phoning.fandom.com/wiki/RabbitBot" id="i2xzaci" target="_blank">RabbitBot</a> - A player controlled rabbit with just command controls<br id="i3w0e9o"/></li><ul draggable="true" id="ifq5zch"><li draggable="true" id="i95y9cg">Introduced in 2015 and released in 2016, as Oitswilliam's first step to publicly available command creations.<br draggable="true" id="i78jq8g"/></li><li draggable="true" id="ibnguev">Officially discontinued and marked development obsolete in 2023. Although users can still <a __p="undefined" href="https://www.dropbox.com/s/9va856j39efw569/RabbitBot%20Commands.txt?dl=0" id="iwu0vx2" target="_blank">get it as scraps of command lines</a>, it works until versions later JE 1.9.4.</li></ul></ul></div></div><FOOTER id="footer-2-10" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px; height: 0px">
+        <div class="inner">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="index.html" class="">Home</a>
-        <a href="/blogs" class="">Blog</a>
+          <div class="nav_links">
+            <div class="main_categories">
+              <a href="hardware.html" class="">Hardware</a>
+              <a href="media.html" class="">Media</a>
+              <a href="minecraft-content.html" class="">For Minecraft</a>
+              <a href="support.html" class="">Support</a>
+            </div>
         <br>
-        <h2>Main categories</h2>
-        <a href="hardware.html" class="">Hardware</a>
-        <a href="media.html" class="">Media</a>
-        <a href="minecraft-content.html" class="">For Minecraft</a>
-        <a href="support.html" class="">Support</a>
+        <a href="/blogs" class="">Blog</a>
         <br>
         <h2>About</h2>
         <a href="owned-3d-printers.html" class="">Owned 3D printers</a>
@@ -345,6 +413,7 @@ function closeNav() {
         <h2>Usage Policies</h2>
         <a href="terms-of-use.html" class="">Terms of Use</a>
         <a href="sheer-dedicated-server-usage-policy.html" class="">SDS Usage Policy</a>
+          </div>
     </div>
 </div>
 <div id="izp9zr3-8-2" class="footer-nav--container"><div id="ijpscfp-3-10" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-3-10">Main categories</H3><P id="iejg7kj-4-10"><A href="./hardware.html" id="ia0ytdj-4-10">Hardware</A></P><P id="iejg7kj-2-5-10"><A href="./media.html" id="ia0ytdj-2-5-10">Media</A></P><P id="iejg7kj-2-3-4-10"><A href="./minecraft-content.html" id="ia0ytdj-2-3-4-10">For Minecraft</A></P><P id="iejg7kj-2-2-3-10"><A href="./support.html" id="ia0ytdj-2-2-2-10">Support</A></P><H3 id="iha1ect-4-10">Featured projects<br id="ig51bx7-3-10"/></H3><P id="iejg7kj-2-3-2-5-10"><A href="./interview-with-oitswilliam.html" id="ia0ytdj-2-3-2-5-10">Interview with Oitswilliam<br id="i2rs205-5-10"/></A></P><P id="iejg7kj-2-3-2-3-3-10"><A href="./oitswilliamv2.html" id="ia0ytdj-2-3-2-3-3-10">OitswilliamV2<br id="i2rs205-3-3-10"/></A></P><P id="iejg7kj-2-3-2-2-3-10"><A href="./oitswilliamv0.html" id="ia0ytdj-2-3-2-2-3-10">OITSWILLIAMV0<br id="i2rs205-2-3-10"/></A></P></div><div id="ijpscfp-2-2-10" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-2-2-10">About</H3><P id="iejg7kj-3-2-10"><A href="./owned-3d-printers.html" id="ia0ytdj-3-2-10">Owned 3D printers</A></P><P id="iejg7kj-2-4-2-10"><A href="./rigs.html" id="ia0ytdj-2-4-2-10">Rigs</A></P><P id="iejg7kj-2-3-3-2-10"><A href="./events.html" id="ia0ytdj-2-3-3-2-10">Future events</A></P><P id="iejg7kj-2-2-2-2-10"></P><H3 id="iha1ect-3-2-10">Using Oitswilliam's products<br id="ig51bx7-2-2-10"/></H3><P id="iejg7kj-2-3-2-4-2-10"><A href="./terms-of-use.html" id="ia0ytdj-2-3-2-4-2-10">Terms of Use<br id="i2rs205-4-2-10"/></A></P><P id="iejg7kj-2-3-2-3-2-2-10"><A href="./oitswilliam-pang-minecraft-maps-and-legacy-projects-policies.html" id="ia0ytdj-2-3-2-3-2-2-10">Oitswilliam's MC Maps Policy<br id="i2rs205-3-2-2-10"/></A></P><P id="iejg7kj-2-3-2-2-2-2-10"><A href="./sheer-dedicated-server-usage-policy.html" id="ia0ytdj-2-3-2-2-2-2-10">SDS Usage Policy<br id="i2rs205-2-2-2-10"/></A></P></div></div><div id="i12iczf-2-10"><H2 id="i2bxkqf">Follow Oitswilliam Pang now on:</H2><div id="follow-on-platforms" class="social-media-icon-list">
@@ -437,6 +506,23 @@ function closeNav() {
     <a href="https://github.com/Bunny350/Bunny350.github.io/blob/main/LICENSE" class="" target="_blank">Licenses</a>
 
     <script>
+    // initialize the link just so if js was disabled home link will always be there
+    function changeBrandLinkByResize() {
+        const homeLink = document.querySelector(".topnav").children[0];
+          const width = window.innerWidth
+          if (width > 480) {
+            if (menuOpen) {
+              closeNav()
+            } else {
+              homeLink.href = "index.html";
+            }
+          } else {
+              homeLink.href = "#";
+            }
+        }
+      changeBrandLinkByResize();
+    window.addEventListener("resize", changeBrandLinkByResize);
+      
     const makecurrentd = new Date();
     let monthcheck = makecurrentd.getMonth();
     let daycheck = makecurrentd.getDate();

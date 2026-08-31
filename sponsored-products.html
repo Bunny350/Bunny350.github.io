@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en-us">
 <head>
 <meta charset="UTF-8">
 
@@ -8,7 +8,6 @@
 <style>
   @import "./assets/latofonts.css";
   /* @import "festive.css"; */
-  @import "css/testing.css";
 
 :root {
     --oiwp-web-base: #f1f1f1;
@@ -207,40 +206,56 @@
     
   }
   
-/* footer from older version, will be updated asap unless i go lz */
+/* top navigation */
   
-    @media only screen and (min-width: 480px) {
-      .openbtn {
-        display: none
-      }
+  .topnav a {
+      z-index: 2;
   }
   
   .sidepanel .closebtn {
-  position: absolute;
   text-align: right;
-  top: 0;
-  padding: 8px 0px 8px 80%;
+  top: 0px;
+  padding: 0px;
   text-decoration: none;
   border-style: none;
   font-size: 36px;
   }
   
-  div.sidepanel {
+    div.sidepanel {
+    border-radius: 60px;
     width: 0;
+    height: 0;
+    filter: blur(3px);
     position: fixed;
+    display: none;
     z-index: 1;
-    height: 100%;
-    top: 0px;
-    left: 0;
-    background-color: var(--oiwp-web-bg);
-    overflow-x: hidden;
+    top: -150px;
+    background-color: rgba(240, 240, 240, 0.8);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
     white-space: nowrap;
-    transition: 0.3s;
+    justify-content: center;
+    align-content: center;
+    transition: width 0.5s cubic-bezier(0, 0, 0.1, 1), height 0.5s cubic-bezier(0, 0, 0.1, 1), top 0.15s linear, filter 0.4s cubic-bezier(0, 0, 0.4, 1);
   }
+
+    div.sidepanel.open {
+        width: calc(90% + 0px);
+        height: calc(90% + 0px);
+        filter: blur(0px);
+        border-radius: 16px
+    }
+    
+    @media only screen and (max-width: 480px) {
+      div.sidepanel.open {
+          width: calc(100% + 0px);
+          height: calc(100% + 0px)
+      }
+  }
+
   
   div.sidepanel a {
-    padding: 8px 8px 8px 32px;
-    margin-left: 30px;
+      padding: 8px;
     text-decoration: underline;
     color: var(--oiwp-web-gray);
     font-size: 25px;
@@ -250,40 +265,92 @@
   }
   
   div.sidepanel .inner {
-  overflow-y: scroll;
-  margin-top: 60px;
   padding-bottom: 80px;
+  min-width: 90vw;
+  max-width: 1200px;
+  min-height: 90vh;
+  max-height: 800px;
+  margin-left: 24px;
+  margin-right: 24px;
+  overflow: hidden
   }
+    div.sidepanel .nav_links {
+        overflow-y: scroll;
+        height: 100%
+    }
+    
+    div.sidepanel .nav_links .main_categories {
+     display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    div.sidepanel .nav_links .main_categories a {
+    color: #000;
+     text-decoration: none;
+     font-weight: bold;
+     padding: 12px;
+     margin: 4px;
+     border-radius: 12px
+     
+    }
+    div.sidepanel .nav_links .main_categories a:hover {
+        background-color: #e6e6e6;
+        box-shadow: 0 0 3px 0px #4d4d4d;
+    }
   
 </style>
 
 <script>
+  var menuOpen = false;
   function openNav() {
-    window.scrollTo(0, 0);
-    // one person created websites are sometimes lazy
-    document.getElementById("sidemenu").style.width = "100%";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "scale(0.85)";
-    }
-    window.scrollTo(0, 0);
-    document.body.style.overflow = "hidden";
-    // if any scroll is attempted,
-    // set this to the previous value
-    window.onscroll = function() {
+      const homeLink = document.querySelector(".topnav").children[0];
+      const sideMenu = document.getElementById("sidemenu");
+      if (!menuOpen) {
         window.scrollTo(0, 0);
+        sideMenu.style.display = "flex";
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        setTimeout(() => {
+            sideMenu.style.top = "0px";
+            homeLink.href = "index.html";
+            }, 40);
+        setTimeout(() => {
+        // one person created websites are sometimes lazy
+        sideMenu.style.width = null;
+        sideMenu.style.height = null;
+        sideMenu.classList.add("open");
+        menuOpen = true
+        }, 130);
+        window.scrollTo(0, 0);
+        document.body.style.overflow = "hidden";
+        // if any scroll is attempted,
+        // set this to the previous value
+        window.onscroll = function() {
+            window.scrollTo(0, 0);
+        }
     }
 }
 
 function closeNav() {
-    document.body.style.overflow = null;
-    document.getElementById("sidemenu").style.width = "0";
-    const counter = document.getElementsByClassName("oiwp-shrinkable");
-    for (let num = 0; num < counter.length; num++) {
-        counter[num].style.transform = "";
+    const homeLink = document.querySelector(".topnav").children[0];
+    const sideMenu = document.getElementById("sidemenu")
+    if (menuOpen) {
+        document.body.style.overflow = null;
+        sideMenu.classList.remove("open");
+        sideMenu.style.width = "calc(150px + 0px)";
+        sideMenu.style.height = "calc(150px + 0px)";
+        sideMenu.style.top = "-150px";
+        homeLink.href = "#";
+        sideMenu.style.transition = "width 0.2s cubic-bezier(0, 0, 0, 1), height 0.2s cubic-bezier(0, 0, 0, 1), top 0.15s linear";
+        setTimeout(() => {
+            sideMenu.style.display = "none";
+            sideMenu.style.transition = null;
+            menuOpen = false
+            }, 400);
+        window.onscroll = function() {};
     }
-    window.onscroll = function() {};
 }
+
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -292,7 +359,7 @@ function closeNav() {
 <link rel="icon" href="assets/oiwp-favicon.png" />
 <meta name="description" property="description" content="Oitswilliam Pang - ideas from the distant future. Oitswilliam is a CAD designer and a leading UX designer for 3D printers."/>
 </head>
-<body id="i0jc8de"><HEADER id="ij3fwt-2-8"><div id="top-nav-all-2-8" class="topnav"><div id="idaiu3f"><button class="openbtn" onclick="openNav()">☰</button></div><a href="index.html">
+<body id="i0jc8de"><HEADER id="ij3fwt-2-8"><div id="top-nav-all-2-8" class="topnav"><a href="index.html" onclick="openNav()">
   <svg version="1.1" width="200px" viewBox="0 0 436 72" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
    <defs>
     <linearGradient id="driving-bar" x1="4" x2="435.97" y1="17.383" y2="17.383" gradientUnits="userSpaceOnUse">
@@ -327,17 +394,18 @@ function closeNav() {
     </g>
    </g>
   </svg>
-</a><div id="top-nav-main-cats-2-2-3-2-8" class="header-nav"><A href="./hardware.html" id="main-category-hardware-3-2-3-2-8" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-3-2-3-2-8" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-3-2-3-2-8" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-3-2-3-2-8" class="mainnav">Support<br id="imkpb-2-8"/></A></div><div id="nav-topnav-spacing-2-2-3-2-8" class="homepage-spacing landscape"></div></div></HEADER><div id="iepjvsp"><div id="iw8pgxx">There are no current sponsors with Oitswilliam Pang.<br id="ih8h2hh"/><A href="./media.html" id="iicctvk"><H2 id="irfcz5t">Follow Oitswilliam Pang now</H2></A></div><div id="ij0y5c2"><h1 id="ie2x54l">Sponsorship policy</h1>This lists the policy about sponsoring with Oitswilliam, using Oitswilliam properly, the strategies and limitations. You may agree to this policy before requesting for the sponsorship. You may not use such services if you do not agree with this policy.<br id="iq4g6g4"/><br id="i9hfryl"/>Oitswilliam Pang Passivepromo and Activepromo are the two official types of sponsor service. Passivepromo only applies to places while Activepromo applies to hardware products (including remix of OIWP PCBs and non-OIWP products) and places.<br id="i1u5p2p"/><br id="ir0zo4n"/><b id="ioxpl1f">Passivepromo will be unlocked if Oitswilliam Pang reaches 1k followers in both Facebook account, Facebook page and Instagram (at least or average 500 in a platform or per platform respectively), or 5k subscribers on YouTube, which is too far but is needed to reach.<br id="ikqq0v9"/><br id="ivc69wp"/>Activepromo will be available if Oitswilliam Pang reaches 10k followers in either Facebook account / Facebook page, or Instagram (followers in other platforms do not count).<br id="itm66ml"/><br id="iium1tq"/>Other platforms include GitHub, Reddit, Steam, X and Xbox, former includes Planet Minecraft and DeviantArt. Oitswilliam will not track these until further announcement.</b><br id="idh9ut3"/><br id="ixv4ijg"/>Sponsors whose sponsoring with Oitswilliam Pang before Oitswilliam reach 40k followers in both Facebook page and Instagram, or 20k subscribers on YouTube will receive Early Sponsor badge on and will be on the top of this Sponsored products page.<br id="iuqjbmg"/><br id="iyrshge"/>Sponsors who's no longer sponsoring with Oitswilliam will be put on the former sponsors section.<br id="icp9dkj"/><h2 id="iozfhdi">Using Oitswilliam Pang</h2>Oitswilliam Pang might be a main character of this website, or unscripted show, but he is a real person.<br id="iixe0qg"/><br id="i14wxda"/>Please note that misusing Oitswilliam Pang, including but not limited to making content with Oitswilliam via deepfake, tricking people into thinking or believing that Oitswilliam "approved" your material without letting him know, may lead to you to be blacklisted, also known as the Naughty List. This mostly lists violators, such as suspicious public people, groups or companies whose misused Oitswilliam's content. Violators may not sponsor with Oitswilliam Pang.<br id="i5hacf7"/><h2 id="ib207dc">Passivepromo strategy</h2>Passivepromo works by filming an unrelated section of such place, making a feeling of being outside but wanted to attend on it. You can optionally request for Activepromo to promote your facilities, pricing, etc.<br id="iw7vm0k"/><h2 id="it8pvvl">Activepromo strategy</h2>Activepromo, at it's name, is obvious by promoting your product. It applies more than Passivepromo. You can use it to promote your products within 15 seconds during the video or 30 seconds or more after the content unrelated. Oitswilliam may attempt to use your product as much as possible throughout the video.<br id="inf8vvn"/><h2 id="i8tv0nk">Using Oitswilliam sponsorship</h2>Oitswilliam may hold responsibility for introducing your product. However Oitswilliam may not require your permission to deny certain product if it does not meet the requirements, is a scam product that could be debunked easily or if it can break the specific laws (also known as illegal).<br id="iem9rai"/><h3 id="ipfr14m">List of allowed and disallowed products</h3>Passivepromo only apply to places. Passivepromo may only apply to places that are not for illegal activities. Passivepromo may not be applicable to bars, music shows or outer space. You may acknowledge that Oitswilliam may bring the innovations of his idea to your place if possible.<br id="i25ql04"/><br id="ininvda"/><span id="ilvb03h">For Activepromo sponsors that are other than places, please see the sections below.</span><br id="ijlpr5p"/><br id="iopzprd"/>For software, you must be an authentic software provider if you are providing the software. You may not say the link being exclusive or provide exclusive domain / subdomain, and the link must be publicly available to everyone else. You are allowed to provide the licensing code but it must be contained in an email address and not by opening another software.<br id="i6iqrg8"/><br id="i8uuuy8"/>For products, you are allowed to promote a remix of OIWP hardware, when or after letting Oitswilliam know you are remixing a PCB. Illegal products may not be promoted, and your product may be flagged.<br id="ic2nk7j"/><br id="i22fea1"/>Speaking of other product types, please see the sections below:<br id="ipogpml"/><br id="i57ebi3"/>Free energy or free Internet devices (the devices that can "generate" electricity with unlimited efficiency or provide Internet with unlimited data for free) may not be promoted as it is obviously bogus.<br id="iy08jbk"/><br id="i2y7wus"/>Clean energy devices (such as backup battery, solar energy devices) can be promoted in an effort to reduce carbon footprint produced from fossil fuel.<br id="iiu2qi7"/><br id="i99lnuy"/>Plastic recycling devices are also specially welcome, as Oitswilliam is an FFF (fused filament fabrication) enthusiast who prints in ABS, PETG and PLA, and sometimes like to use exotic materials.<br id="i4do2rd"/><br id="i9lnm6i"/>Other products (such as but not limited to chargers, cables) are allowed to be sponsored if they comply regulatory standards or legal standards.<br id="iub26s3"/><h2 id="izc59uz">Spreading misinformation</h2>Misinformation (also known as looner claims, which will be called that in later sections) are information that are either too vague or have missing / lacking to no evidences as of why it is evidenced, only on what they said. <b id="ig4a38i">Looner claims are harmful to the select or even all community, and thus is not allowed.</b> An example of looner claim is "lie on it, you'll feel good and floaty," but it is actually dangerous. Oitswilliam Pang does not list information that are classified as looner claim.<br id="ipzrwud"/><br id="i5b09wy"/>The only way to investigate whether your information contains any of the looner claims is to provide the information normally, and that's it. Oitswilliam will check for looner claims.<br id="i48cjqr"/><br id="ic063ag"/>For the definition of misinformation spreader or premier, looner (pronounces similar to loner, but lo- part is longer) is defined as an example of those whose tend to sit and lie on balloons, and they are usually as big as the looner wants. We are extending it as if they firmly believe in misinformation enlisted, or actions that are definitely incorrect "correct". Oitswilliam Pang does not list types or groups that are classified as looners.<br id="iuzcg7g"/><br id="i204hty"/></div></div><FOOTER id="footer-2-3" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px">
-    <div class="inner">
+</a><div id="top-nav-main-cats-2-2-3-2-8" class="header-nav"><A href="./hardware.html" id="main-category-hardware-3-2-3-2-8" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-3-2-3-2-8" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-3-2-3-2-8" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-3-2-3-2-8" class="mainnav">Support<br id="imkpb-2-8"/></A></div><div id="nav-topnav-spacing-2-2-3-2-8" class="homepage-spacing landscape"></div></div></HEADER><div id="iepjvsp"><div id="iw8pgxx">There are no current sponsors with Oitswilliam Pang.<br id="ih8h2hh"/><A href="./media.html" id="iicctvk"><H2 id="irfcz5t">Follow Oitswilliam Pang now</H2></A></div><div id="ij0y5c2"><h1 id="ie2x54l">Sponsorship policy</h1>This lists the policy about sponsoring with Oitswilliam, using Oitswilliam properly, the strategies and limitations. You may agree to this policy before requesting for the sponsorship. You may not use such services if you do not agree with this policy.<br id="iq4g6g4"/><br id="i9hfryl"/>Oitswilliam Pang Passivepromo and Activepromo are the two official types of sponsor service. Passivepromo only applies to places while Activepromo applies to hardware products (including remix of OIWP PCBs and non-OIWP products) and places.<br id="i1u5p2p"/><br id="ir0zo4n"/><b id="ioxpl1f">Passivepromo will be unlocked if Oitswilliam Pang reaches 1k followers in both Facebook account, Facebook page and Instagram (at least or average 500 in a platform or per platform respectively), or 5k subscribers on YouTube, which is too far but is needed to reach.<br id="ikqq0v9"/><br id="ivc69wp"/>Activepromo will be available if Oitswilliam Pang reaches 10k followers in either Facebook account / Facebook page, or Instagram (followers in other platforms do not count).<br id="itm66ml"/><br id="iium1tq"/>Other platforms include GitHub, Reddit, Steam, X and Xbox, former includes Planet Minecraft and DeviantArt. Oitswilliam will not track these until further announcement.</b><br id="idh9ut3"/><br id="ixv4ijg"/>Sponsors whose sponsoring with Oitswilliam Pang before Oitswilliam reach 40k followers in both Facebook page and Instagram, or 20k subscribers on YouTube will receive Early Sponsor badge on and will be on the top of this Sponsored products page.<br id="iuqjbmg"/><br id="iyrshge"/>Sponsors who's no longer sponsoring with Oitswilliam will be put on the former sponsors section.<br id="icp9dkj"/><h2 id="iozfhdi">Using Oitswilliam Pang</h2>Oitswilliam Pang might be a main character of this website, or unscripted show, but he is a real person.<br id="iixe0qg"/><br id="i14wxda"/>Please note that misusing Oitswilliam Pang, including but not limited to making content with Oitswilliam via deepfake, tricking people into thinking or believing that Oitswilliam "approved" your material without letting him know, may lead to you to be blacklisted, also known as the Naughty List. This mostly lists violators, such as suspicious public people, groups or companies whose misused Oitswilliam's content. Violators may not sponsor with Oitswilliam Pang.<br id="i5hacf7"/><h2 id="ib207dc">Passivepromo strategy</h2>Passivepromo works by filming an unrelated section of such place, making a feeling of being outside but wanted to attend on it. You can optionally request for Activepromo to promote your facilities, pricing, etc.<br id="iw7vm0k"/><h2 id="it8pvvl">Activepromo strategy</h2>Activepromo, at it's name, is obvious by promoting your product. It applies more than Passivepromo. You can use it to promote your products within 15 seconds during the video or 30 seconds or more after the content unrelated. Oitswilliam may attempt to use your product as much as possible throughout the video.<br id="inf8vvn"/><h2 id="i8tv0nk">Using Oitswilliam sponsorship</h2>Oitswilliam may hold responsibility for introducing your product. However Oitswilliam may not require your permission to deny certain product if it does not meet the requirements, is a scam product that could be debunked easily or if it can break the specific laws (also known as illegal).<br id="iem9rai"/><h3 id="ipfr14m">List of allowed and disallowed products</h3>Passivepromo only apply to places. Passivepromo may only apply to places that are not for illegal activities. Passivepromo may not be applicable to bars, music shows or outer space. You may acknowledge that Oitswilliam may bring the innovations of his idea to your place if possible.<br id="i25ql04"/><br id="ininvda"/><span id="ilvb03h">For Activepromo sponsors that are other than places, please see the sections below.</span><br id="ijlpr5p"/><br id="iopzprd"/>For software, you must be an authentic software provider if you are providing the software. You may not say the link being exclusive or provide exclusive domain / subdomain, and the link must be publicly available to everyone else. You are allowed to provide the licensing code but it must be contained in an email address and not by opening another software.<br id="i6iqrg8"/><br id="i8uuuy8"/>For products, you are allowed to promote a remix of OIWP hardware, when or after letting Oitswilliam know you are remixing a PCB. Illegal products may not be promoted, and your product may be flagged.<br id="ic2nk7j"/><br id="i22fea1"/>Speaking of other product types, please see the sections below:<br id="ipogpml"/><br id="i57ebi3"/>Free energy or free Internet devices (the devices that can "generate" electricity with unlimited efficiency or provide Internet with unlimited data for free) may not be promoted as it is obviously bogus.<br id="iy08jbk"/><br id="i2y7wus"/>Clean energy devices (such as backup battery, solar energy devices) can be promoted in an effort to reduce carbon footprint produced from fossil fuel.<br id="iiu2qi7"/><br id="i99lnuy"/>Plastic recycling devices are also specially welcome, as Oitswilliam is an FFF (fused filament fabrication) enthusiast who prints in ABS, PETG and PLA, and sometimes like to use exotic materials.<br id="i4do2rd"/><br id="i9lnm6i"/>Other products (such as but not limited to chargers, cables) are allowed to be sponsored if they comply regulatory standards or legal standards.<br id="iub26s3"/><h2 id="izc59uz">Spreading misinformation</h2>Misinformation (also known as looner claims, which will be called that in later sections) are information that are either too vague or have missing / lacking to no evidences as of why it is evidenced, only on what they said. <b id="ig4a38i">Looner claims are harmful to the select or even all community, and thus is not allowed.</b> An example of looner claim is "lie on it, you'll feel good and floaty," but it is actually dangerous. Oitswilliam Pang does not list information that are classified as looner claim.<br id="ipzrwud"/><br id="i5b09wy"/>The only way to investigate whether your information contains any of the looner claims is to provide the information normally, and that's it. Oitswilliam will check for looner claims.<br id="i48cjqr"/><br id="ic063ag"/>For the definition of misinformation spreader or premier, looner (pronounces similar to loner, but lo- part is longer) is defined as an example of those whose tend to sit and lie on balloons, and they are usually as big as the looner wants. We are extending it as if they firmly believe in misinformation enlisted, or actions that are definitely incorrect "correct". Oitswilliam Pang does not list types or groups that are classified as looners.<br id="iuzcg7g"/><br id="i204hty"/></div></div><FOOTER id="footer-2-3" class="feature--center"><div id="sidemenu" class="sidepanel" style="width: 0px; height: 0px">
+        <div class="inner">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="index.html" class="">Home</a>
-        <a href="/blogs" class="">Blog</a>
+          <div class="nav_links">
+            <div class="main_categories">
+              <a href="hardware.html" class="">Hardware</a>
+              <a href="media.html" class="">Media</a>
+              <a href="minecraft-content.html" class="">For Minecraft</a>
+              <a href="support.html" class="">Support</a>
+            </div>
         <br>
-        <h2>Main categories</h2>
-        <a href="hardware.html" class="">Hardware</a>
-        <a href="media.html" class="">Media</a>
-        <a href="minecraft-content.html" class="">For Minecraft</a>
-        <a href="support.html" class="">Support</a>
+        <a href="/blogs" class="">Blog</a>
         <br>
         <h2>About</h2>
         <a href="owned-3d-printers.html" class="">Owned 3D printers</a>
@@ -345,6 +413,7 @@ function closeNav() {
         <h2>Usage Policies</h2>
         <a href="terms-of-use.html" class="">Terms of Use</a>
         <a href="sheer-dedicated-server-usage-policy.html" class="">SDS Usage Policy</a>
+          </div>
     </div>
 </div>
 <div id="izp9zr3-7-2" class="footer-nav--container"><div id="ijpscfp-3-3" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-3-3">Main categories</H3><P id="iejg7kj-4-3"><A href="./hardware.html" id="ia0ytdj-4-3">Hardware</A></P><P id="iejg7kj-2-5-3"><A href="./media.html" id="ia0ytdj-2-5-3">Media</A></P><P id="iejg7kj-2-3-4-3"><A href="./minecraft-content.html" id="ia0ytdj-2-3-4-3">For Minecraft</A></P><P id="iejg7kj-2-2-3-3"><A href="./support.html" id="ia0ytdj-2-2-2-3">Support</A></P><H3 id="iha1ect-4-3">Featured projects<br id="ig51bx7-3-3"/></H3><P id="iejg7kj-2-3-2-5-3"><A href="./interview-with-oitswilliam.html" id="ia0ytdj-2-3-2-5-3">Interview with Oitswilliam<br id="i2rs205-5-3"/></A></P><P id="iejg7kj-2-3-2-3-3-3"><A href="./oitswilliamv2.html" id="ia0ytdj-2-3-2-3-3-3">OitswilliamV2<br id="i2rs205-3-3-3"/></A></P><P id="iejg7kj-2-3-2-2-3-3"><A href="./oitswilliamv0.html" id="ia0ytdj-2-3-2-2-3-3">OITSWILLIAMV0<br id="i2rs205-2-3-3"/></A></P></div><div id="ijpscfp-2-2-3" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-2-2-3">About</H3><P id="iejg7kj-3-2-3"><A href="./owned-3d-printers.html" id="ia0ytdj-3-2-3">Owned 3D printers</A></P><P id="iejg7kj-2-4-2-3"><A href="./rigs.html" id="ia0ytdj-2-4-2-3">Rigs</A></P><P id="iejg7kj-2-3-3-2-3"><A href="./events.html" id="ia0ytdj-2-3-3-2-3">Future events</A></P><P id="iejg7kj-2-2-2-2-3"></P><H3 id="iha1ect-3-2-3">Using Oitswilliam's products<br id="ig51bx7-2-2-3"/></H3><P id="iejg7kj-2-3-2-4-2-3"><A href="./terms-of-use.html" id="ia0ytdj-2-3-2-4-2-3">Terms of Use<br id="i2rs205-4-2-3"/></A></P><P id="iejg7kj-2-3-2-3-2-2-3"><A href="./oitswilliam-pang-minecraft-maps-and-legacy-projects-policies.html" id="ia0ytdj-2-3-2-3-2-2-3">Oitswilliam's MC Maps Policy<br id="i2rs205-3-2-2-3"/></A></P><P id="iejg7kj-2-3-2-2-2-2-3"><A href="./sheer-dedicated-server-usage-policy.html" id="ia0ytdj-2-3-2-2-2-2-3">SDS Usage Policy<br id="i2rs205-2-2-2-3"/></A></P></div></div><div id="i12iczf-2-3"><H2 id="i6nhzjf">Follow Oitswilliam Pang now on:</H2><div id="follow-on-platforms" class="social-media-icon-list">
@@ -437,6 +506,23 @@ function closeNav() {
     <a href="https://github.com/Bunny350/Bunny350.github.io/blob/main/LICENSE" class="" target="_blank">Licenses</a>
 
     <script>
+    // initialize the link just so if js was disabled home link will always be there
+    function changeBrandLinkByResize() {
+        const homeLink = document.querySelector(".topnav").children[0];
+          const width = window.innerWidth
+          if (width > 480) {
+            if (menuOpen) {
+              closeNav()
+            } else {
+              homeLink.href = "index.html";
+            }
+          } else {
+              homeLink.href = "#";
+            }
+        }
+      changeBrandLinkByResize();
+    window.addEventListener("resize", changeBrandLinkByResize);
+      
     const makecurrentd = new Date();
     let monthcheck = makecurrentd.getMonth();
     let daycheck = makecurrentd.getDate();
