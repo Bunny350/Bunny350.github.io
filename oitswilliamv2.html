@@ -20,7 +20,7 @@
     --oiwp-web-gray: #505050;
     --oiwp-round-corner: 8px;
 }
-
+  
   .social-platform-box, .container-skewmorphic, .mainnav, .feature-popup, .backdrop-blur-override {
     backdrop-filter: blur(2px);
   }
@@ -31,8 +31,15 @@
     font-feature-settings: "pnum" on, "salt" on, "liga" off;
     }
 
+    div.topnav svg g {
+	transition: fill 280ms
+    }
+  
+    div.topnav {
+   --logo-whitetext: #fff 
+  	}
 
-   .topnav.homepage {
+   div.topnav.homepage {
    position: sticky;
    transition: top 0.2s ease-out, background-color 0.2s, border-radius 0.4s cubic-bezier(0, 0, 0, 1.32), 		width 0.2s ease-out
   	}
@@ -307,6 +314,9 @@
       const sideMenu = document.getElementById("sidemenu");
       if (!menuOpen) {
         window.scrollTo(0, 0);
+        if (document.querySelector(".dark-theme-override")) {
+          homeLink.style.setProperty('--logo-whitetext', '#000');
+        }
         sideMenu.style.display = "flex";
         sideMenu.style.width = "calc(150px + 0px)";
         sideMenu.style.height = "calc(150px + 0px)";
@@ -340,8 +350,11 @@ function closeNav() {
         sideMenu.style.width = "calc(150px + 0px)";
         sideMenu.style.height = "calc(150px + 0px)";
         sideMenu.style.top = "-150px";
-        homeLink.href = "#";
+      	if (window.innerWidth <= 480) {homeLink.href = "#";}
         sideMenu.style.transition = "width 0.2s cubic-bezier(0, 0, 0, 1), height 0.2s cubic-bezier(0, 0, 0, 1), top 0.15s linear";
+        if (document.querySelector(".dark-theme-override")) {
+          homeLink.style.setProperty('--logo-whitetext', '#fff');
+        }
         setTimeout(() => {
             sideMenu.style.display = "none";
             sideMenu.style.transition = null;
@@ -417,7 +430,7 @@ function closeNav() {
 <meta name="description" property="description" content="OitswilliamV2 - Welcome to the distant future. Made for VORON2."/>
 <meta name="og:description" property="og:description" content="Welcome to the distant future. Made for VORON2."/>
 </head>
-<body id="il8s2z"><HEADER id="ij3fwt-2-4"><div id="top-nav-all-2-4" class="topnav"><button class="openbtn" onclick="openNav()">☰</button><a href="index.html">
+<body id="il8s2z"><HEADER id="ij3fwt-2-4" class="dark-theme-override"><div id="top-nav-all-2-4" class="topnav"><a href="index.html" onclick="openNav()">
 <svg version="1.1" width="200px" viewBox="0 0 436 72" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
  <defs>
   <linearGradient id="driving-bar" x1="4" x2="435.97" y1="17.383" y2="17.383" gradientUnits="userSpaceOnUse">
@@ -430,7 +443,7 @@ function closeNav() {
   </linearGradient>
  </defs>
  <g transform="translate(-2 -2)">
-  <g transform="translate(0 33.883)" stroke-width=".26458" aria-label="OITSWILLIAM PANG" style="fill: #fff">
+  <g transform="translate(0 33.883)" stroke-width=".26458" aria-label="OITSWILLIAM PANG" style="fill: var(--logo-whitetext)">
    <path d="m33.379 19.536q0 4.699-1.524 8.2127-1.4817 3.4713-4.7413 5.4187-3.2597 1.9473-8.4243 1.9473-5.08 0-8.3397-1.9473t-4.826-5.461q-1.524-3.5137-1.524-8.2127t1.5663-8.1703 4.7837-5.3763q3.2597-1.9473 8.382-1.9473 5.1647 0 8.382 1.9473 3.2597 1.905 4.7413 5.4187 1.524 3.4713 1.524 8.1703zm-20.786 0q0 4.1063 1.397 6.4347 1.4393 2.3283 4.699 2.3283 3.3867 0 4.7413-2.3283 1.3547-2.3283 1.3547-6.4347t-1.3547-6.477q-1.3547-2.3707-4.699-2.3707t-4.7413 2.3707-1.397 6.477z"></path>
    <path d="m52.768 34.692h-15.748v-4.6567l3.7677-1.4393v-18.076l-3.7677-1.397v-4.6567h15.748v4.6563l-3.7677 1.3973v18.076l3.7677 1.4393z"></path>
    <path d="m70.802 34.692h-8.1703v-23.537h-7.366v-6.6887h22.902v6.6887h-7.366z"></path>

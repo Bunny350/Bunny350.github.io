@@ -20,7 +20,7 @@
     --oiwp-web-gray: #505050;
     --oiwp-round-corner: 8px;
 }
-
+  
   .social-platform-box, .container-skewmorphic, .mainnav, .feature-popup, .backdrop-blur-override {
     backdrop-filter: blur(2px);
   }
@@ -31,8 +31,15 @@
     font-feature-settings: "pnum" on, "salt" on, "liga" off;
     }
 
+    div.topnav svg g {
+	transition: fill 280ms
+    }
+  
+    div.topnav {
+   --logo-whitetext: #fff 
+  	}
 
-   .topnav.homepage {
+   div.topnav.homepage {
    position: sticky;
    transition: top 0.2s ease-out, background-color 0.2s, border-radius 0.4s cubic-bezier(0, 0, 0, 1.32), 		width 0.2s ease-out
   	}
@@ -307,6 +314,9 @@
       const sideMenu = document.getElementById("sidemenu");
       if (!menuOpen) {
         window.scrollTo(0, 0);
+        if (document.querySelector(".dark-theme-override")) {
+          homeLink.style.setProperty('--logo-whitetext', '#000');
+        }
         sideMenu.style.display = "flex";
         sideMenu.style.width = "calc(150px + 0px)";
         sideMenu.style.height = "calc(150px + 0px)";
@@ -340,8 +350,11 @@ function closeNav() {
         sideMenu.style.width = "calc(150px + 0px)";
         sideMenu.style.height = "calc(150px + 0px)";
         sideMenu.style.top = "-150px";
-        homeLink.href = "#";
+      	if (window.innerWidth <= 480) {homeLink.href = "#";}
         sideMenu.style.transition = "width 0.2s cubic-bezier(0, 0, 0, 1), height 0.2s cubic-bezier(0, 0, 0, 1), top 0.15s linear";
+        if (document.querySelector(".dark-theme-override")) {
+          homeLink.style.setProperty('--logo-whitetext', '#fff');
+        }
         setTimeout(() => {
             sideMenu.style.display = "none";
             sideMenu.style.transition = null;
