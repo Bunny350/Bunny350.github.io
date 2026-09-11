@@ -353,7 +353,7 @@ function closeNav() {
       	if (window.innerWidth <= 480) {homeLink.href = "#";}
         sideMenu.style.transition = "width 0.2s cubic-bezier(0, 0, 0, 1), height 0.2s cubic-bezier(0, 0, 0, 1), top 0.15s linear";
         if (document.querySelector(".dark-theme-override")) {
-          homeLink.style.setProperty('--logo-whitetext', '#fff');
+          homeLink.style.setProperty('--logo-whitetext', null);
         }
         setTimeout(() => {
             sideMenu.style.display = "none";
