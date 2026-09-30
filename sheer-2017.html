@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="/css/sheer-2017-local.css" />
 <style>
   @import "./assets/latofonts.css";
+  @import "./assets/theming.css";
   /* @import "festive.css"; */
 
 :root {
@@ -21,290 +22,11 @@
     --oiwp-round-corner: 8px;
 }
   
-  .social-platform-box, .container-skewmorphic, .mainnav, .feature-popup, .backdrop-blur-override {
-    backdrop-filter: blur(2px);
-  }
-  
 /* MARK: Default web font */
-	* {
+	body {
     font-family: Lato, Avenir, "Helvetica Neue", Helvetica, Arial, sans; 
     font-feature-settings: "pnum" on, "salt" on, "liga" off;
     }
-
-    div.topnav svg g {
-	transition: fill 280ms
-    }
-  
-    div.topnav {
-   --logo-whitetext: #fff 
-  	}
-
-   div.topnav.homepage {
-   position: sticky;
-   transition: top 0.2s ease-out, background-color 0.2s, border-radius 0.4s cubic-bezier(0, 0, 0, 1.32), 		width 0.2s ease-out
-  	}
-  
-  .feature-card-box::-webkit-scrollbar {
-    display: none
-  }
-  .feature-card-box {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-	}
-  
-  /* icons */
-    figure.check {
-        width: 16px;
-        height: 16px;
-        background-repeat: no-repeat;
-        background-image: url(assets/check.svg)
-    }
-    figure.close {
-        width: 16px;
-        height: 16px;
-        background-repeat: no-repeat;
-        background-image: url(assets/close.svg)
-    }
-
-    figure.x-sp {
-        width: 50px;
-        height: 50px;
-        background-repeat: no-repeat;
-        background-image: url(assets/x-logo-light.svg)
-    }
-
-  table.follower-feature {
-    border-collapse: separate;
-    font-size: 16px;
-    width: auto;
-    max-width: 100%;
-    border-spacing: 0;
-    overflow-x: scroll;
-  }
-  
-   table.follower-feature figure {
-    margin: auto;
-  }
-  
-  .follower-feature td:first-child, .follower-feature th:first-child {
-    background: var(--oiwp-web-spec-even);
-  }
-  
-  .follower-feature tr td:first-child {
-    border-bottom: 2px var(--oiwp-web-gray) solid;
-    border-top: 2px var(--oiwp-web-gray) solid;
-  }
-  
-  .follower-feature th:first-child {
-    border-radius: 24px 0px 0px 0px;
-  }
-  .follower-feature td, .follower-feature th {
-    border: 2px solid var(--oiwp-web-spec-even);
-    padding: 8px;
-    }
-  
-  /* specifications table */
-	.spec-table {
-      min-width: 98%;
-  }
-  
-    .spec-table td:first-child {
-      font-weight: bold;
-      min-width: 50%
-  }
-      .spec-table td {
-		padding: 5px
-  }
-  
-  	div.specs-note {
-      margin: 0px 4px
-  }
-  
-  /* questions and device information table */
-  
-  div.tab-rebuilt:not(.active):not(.section) {
-  box-shadow: 0px 0px 12px var(--oiwp-web-gray);
-  }
-  
-  .tab-rebuilt button {
-        color: black;
-  }
-  
-    .tab-rebuilt button.active {
-  	background-color: var(--oiwp-web-tab-selected);
-    border-radius: 12px;
-  }
-  
-  .tab-rebuilt button:hover {
-  background-color: var(--oiwp-web-buttonlift);
-  }
-  
-  div.tabcontent div.tab-nav {
-  display: flex;
-  background-color: var(--oiwp-web-spec-even);
-  }
-  
-  @media only screen and (min-width: 720px) {
-    div.tab-rebuilt:not(.active):not(.section) {
-    border-radius: 00px 80px 80px 00px;
-    margin: 12px 12px 12px 25px
-    }
-    
-    .tab-rebuilt {
-      display: flex;
-    }
-    
-    .tab-rebuilt.section {
-    background-color: var(--oiwp-web-spec-even);
-    border: 0px;
-    width: 380px;
-    max-height: 100%;
-    padding-bottom: 12px
-	}
-    
-	.innerlayer.section, .tab-rebuilt.section {
-    min-height: 240px;
-    margin: 0px 12px
-    }
-    
-    .tab-rebuilt button {
-    display: block;
-    background-color: inherit;
-    font-size: 100%;
-    padding: 22px 16px;
-    width: 100%;
-    border: none;
-    outline: none;
-    text-align: left;
-    cursor: pointer;
-    transition: 0.3s;
-	}
-    
-  }
-  
-  @media only screen and (max-width: 960px) {
-   div.tab-rebuilt:not(.active):not(.section) {
-    border-radius: 12px;
-    margin: 8px
-    }
-    .tab-nav.button-as-section .tablinks {
-      width: 100%
-    }
-    .tab-rebuilt.section {
-    background-color: var(--oiwp-web-spec-even);
-    }
-    .tab-rebuilt button {
-      background-color: inherit;
-      float: left;
-      border: medium;
-      outline: medium;
-      cursor: pointer;
-      padding: 14px 16px;
-      transition: 0.3s;
-      font-size: 16px;
-    }
-    
-    .tab-rebuilt {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    border: 1px solid rgb(204, 204, 204);
-    }
-    
-    
-  }
-  
-/* top navigation */
-  
-  .topnav a {
-      z-index: 2;
-  }
-  
-  .sidepanel .closebtn {
-  text-align: right;
-  top: 0px;
-  padding: 0px;
-  text-decoration: none;
-  border-style: none;
-  font-size: 36px;
-  }
-  
-    div.sidepanel {
-    border-radius: 60px;
-    width: 0;
-    height: 0;
-    filter: blur(3px);
-    position: fixed;
-    display: none;
-    z-index: 1;
-    top: -150px;
-    background-color: rgba(240, 240, 240, 0.8);
-    backdrop-filter: blur(6px);
-    overflow: hidden;
-    white-space: nowrap;
-    justify-content: center;
-    align-content: center;
-    transition: width 0.5s cubic-bezier(0, 0, 0.1, 1), height 0.5s cubic-bezier(0, 0, 0.1, 1), top 0.15s linear, filter 0.4s cubic-bezier(0, 0, 0.4, 1);
-  }
-
-    div.sidepanel.open {
-        width: calc(90% + 0px);
-        height: calc(90% + 0px);
-        filter: blur(0px);
-        border-radius: 16px
-    }
-    
-    @media only screen and (max-width: 480px) {
-      div.sidepanel.open {
-          width: calc(100% + 0px);
-          height: calc(100% + 0px)
-      }
-  }
-
-  
-  div.sidepanel a {
-      padding: 8px;
-    text-decoration: underline;
-    color: var(--oiwp-web-gray);
-    font-size: 25px;
-    display: block;
-    transition: 0.3s;
-    border-color: #808080;
-  }
-  
-  div.sidepanel .inner {
-  padding-bottom: 80px;
-  min-width: 90vw;
-  max-width: 1200px;
-  min-height: 90vh;
-  max-height: 800px;
-  margin-left: 24px;
-  margin-right: 24px;
-  overflow: hidden
-  }
-    div.sidepanel .nav_links {
-        overflow-y: scroll;
-        height: 100%
-    }
-    
-    div.sidepanel .nav_links .main_categories {
-     display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    div.sidepanel .nav_links .main_categories a {
-    color: #000;
-     text-decoration: none;
-     font-weight: bold;
-     padding: 12px;
-     margin: 4px;
-     border-radius: 12px
-     
-    }
-    div.sidepanel .nav_links .main_categories a:hover {
-        background-color: #e6e6e6;
-        box-shadow: 0 0 3px 0px #4d4d4d;
-    }
-  
 </style>
 
 <script>
@@ -407,10 +129,10 @@ function closeNav() {
     </g>
    </g>
   </svg>
-</a><div id="top-nav-main-cats-2-2-3-2-9" class="header-nav"><A href="./hardware.html" id="main-category-hardware-3-2-3-2-9" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-3-2-3-2-9" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-3-2-3-2-9" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-3-2-3-2-9" class="mainnav">Support<br id="imkpb-2-9"/></A></div><div id="nav-topnav-spacing-2-2-3-2-9" class="homepage-spacing landscape"></div></div></HEADER><div id="iwyodfh" class="feature-center"><div id="i39r0oo" class="backdrop-blur-override force-white-text box-shadow-generic"><div id="irb8c2h"><h1 id="ipt0gch">Sheer 2017 via Sheer Dedicated Server</h1>A Minecraft server consists of creative structures of the past, today and tomorrow. Hosted in Sheer Dedicated Server.<br id="iby4dqp"/><br id="i3p4rqf"/>Hosted and made for Minecraft Java and Bedrock Edition on almost any platforms. Requires latest version of either edition.<br id="iwfzjo3"/><br id="idhuyxl"/>This server does not run 24 hours a day and may stop hosting at anytime.<br id="io4zku6"/><br id="i6bmwqg"/>You may agree to <A href="./sheer-dedicated-server-usage-policy.html" id="ier4sku" class="force-white-text">Sheer Dedicated Server Usage Policy</A> before joining.<br id="ibwqtga"/></div><div id="ilkust9"><a href="https://docs.google.com/forms/d/e/1FAIpQLSe9aEM7jyf0lV2PUAgOg0_tz9F7GI91byWFxUzvXsLlXambJA/viewform?usp=dialog" id="sds-join-link" class="feat-link" target="_blank"><H2 id="isr0b4l">Join now</H2></a><a href="https://bunny350phoning.fandom.com/Sheer_2017" id="sds-details-link" class="feat-link" target="_blank"><H2 id="i0ohiyi">Details</H2></a></div><div id="iy9n85i">Note: This server is not affiliated with or approved by Mojang Studios. </div></div></div><div id="classicsheer"><div id="idgbz0p"><div id="iuxfaoj" class="backdrop-blur-override force-white-text box-shadow-generic"><H2 id="i4v1npv">Looking for Classic Sheer?</H2><div id="i9r1i6h">This world is a sandbox for ideas, superflat and was only ran in less than 2 years when being obscure and private. We made it public for all visitors to surf around on their own.</div><div id="ix2j4bz"><a href="https://drive.google.com/drive/folders/1xWNyvJnMz77I6RwDkE_fz0AxgJCGdoV4?usp=sharing" id="ivkd9d4" class="feat-link" target="_blank"><H2 id="ib9ycl7">Obtain</H2></a><a href="https://bunny350phoning.fandom.com/wiki/Sheer" id="itxur9m" class="feat-link" target="_blank"><H2 id="izc0k42">Details</H2></a></div><div id="i3uu46o">This world was primarily made in Java Edition, however we made one for Bedrock Edition through <a href="https://www.chunker.app/" id="iduba81" target="_blank" class="force-white-text">Chunker</a> and human-checked compatibility.</div></div></div></div><div id="ipfyrgi"><div id="ifyub6k"><H2 id="ix68lbk">Questions</H2><div class="tab-rebuilt">
+</a><div id="top-nav-main-cats-2-2-3-2-9" class="header-nav"><A href="./hardware.html" id="main-category-hardware-3-2-3-2-9" class="mainnav">Hardware</A><A href="./media.html" id="main-category-media-3-2-3-2-9" class="mainnav">Media</A><A href="./minecraft-content.html" id="main-category-for-minecraft-3-2-3-2-9" class="mainnav">For Minecraft</A><A href="./support.html" id="main-category-support-3-2-3-2-9" class="mainnav">Support<br id="imkpb-2-9"/></A></div><div id="nav-topnav-spacing-2-2-3-2-9" class="homepage-spacing landscape"></div></div></HEADER><div id="iwyodfh" class="feature-center"><div id="i39r0oo" class="backdrop-blur-override force-white-text box-shadow-generic"><div id="irb8c2h"><h1 id="ipt0gch">Sheer 2017 via Sheer Dedicated Server</h1>A Minecraft server consists of creative structures of the past, today and tomorrow. Hosted in Sheer Dedicated Server.<br id="iby4dqp"/><br id="i3p4rqf"/>Hosted and made for Minecraft Java and Bedrock Edition* on almost any platforms. Requires latest version of either edition.<br id="iwfzjo3"/><br id="idhuyxl"/>This server does not run 24 hours a day and may stop hosting at any time. Because of this, you can also get it for offline use*.<br id="io4zku6"/><br id="i6bmwqg"/>By using Sheer 2017 or joining SDS, you agree to <a href="./sheer-usage-policy.html" id="ier4sku" class="force-white-text">Sheer Usage Policy</a>.<br id="ibwqtga"/></div><div id="ilkust9"><a href="https://docs.google.com/forms/d/e/1FAIpQLSe9aEM7jyf0lV2PUAgOg0_tz9F7GI91byWFxUzvXsLlXambJA/viewform?usp=dialog" id="sds-join-link" class="feat-link" target="_blank"><H2 id="isr0b4l">Join now</H2></a><a href="https://bunny350phoning.fandom.com/Sheer_2017" id="sds-details-link" class="feat-link" target="_blank"><H2 id="i0ohiyi">Details</H2></a></div><div id="iy9n85i">Note: This server is not affiliated with or approved by Mojang Studios. <br id="ib5c4y2"/>* Currently, only JE will be available for offline use. Coming November 11.</div></div></div><div id="classicsheer"><div id="idgbz0p"><div id="iuxfaoj" class="backdrop-blur-override force-white-text box-shadow-generic"><H2 id="i4v1npv">Looking for Classic Sheer?</H2><div id="i9r1i6h">This world is a sandbox for ideas, superflat and was only ran in less than 2 years when being obscure and private. We made it public for all visitors to surf around on their own.</div><div id="ix2j4bz"><a href="https://drive.google.com/drive/folders/1xWNyvJnMz77I6RwDkE_fz0AxgJCGdoV4?usp=sharing" id="ivkd9d4" class="feat-link" target="_blank"><H2 id="ib9ycl7">Obtain</H2></a><a href="https://bunny350phoning.fandom.com/wiki/Sheer" id="itxur9m" class="feat-link" target="_blank"><H2 id="izc0k42">Details</H2></a></div><div id="i3uu46o">This world was primarily made in Java Edition, however we made one for Bedrock Edition through <a href="https://www.chunker.app/" id="iduba81" target="_blank" class="force-white-text">Chunker</a> and human-checked compatibility.</div></div></div></div><div id="ipfyrgi"><div id="ifyub6k"><H2 id="ix68lbk">Questions</H2><div class="tab-rebuilt">
   <div class="tab-rebuilt section">
     <div class="tab-nav button-as-section" style="flex: 1">
-      <button class="tablinks active" onclick="sheerqa(event, 'joining')" id="defaultOpen">How can I join Sheer Dedicated Server?</button>
+      <button class="tablinks active" onclick="sheerqa(event, 'joining')" id="defaultOpen">How can I obtain SHeer 2017 or even join Sheer Dedicated Server?</button>
       <button class="tablinks" onclick="sheerqa(event, 'joinerror')">I got an error message while joining! What should I do?</button>
       <button class="tablinks" onclick="sheerqa(event, 'optout')">How do I properly opt-out from Sheer Dedicated Server?</button>
       <button class="tablinks" onclick="sheerqa(event, 'reclaiming')">(To be worked on, coming soon) How do I reclaim land abandoned by stalkers?</button>
@@ -420,8 +142,8 @@ function closeNav() {
   
   <div class="innerlayer section" style="flex: 2">
     <div id="joining" class="tabcontent section" style="display: block;">
-        <h2>How can I join Sheer Dedicated Server?</h2>
-      <p>We are considered making Sheer 2017 available to download to followers of Oitswilliam Pang. Stay tuned by following Oitswilliam on Facebook, Instagram and YouTube, and <a href="/alpha-ea.html"> joining in alpha-EA.</a></p>
+        <h2>How can I obtain Sheer 2017 or even join Sheer Dedicated Server?</h2>
+      <p>Coming soon near you. Stay tuned by following Oitswilliam on Facebook, Instagram and YouTube, and <a href="/alpha-ea.html"> joining in alpha-EA.</a></p>
         <p>
             To join Sheer Dedicated Server, you must be a follower of Oitswilliam Pang in at least one platform, know who Oitswilliam Pang is (most specifically profession and using type of 3D software) and is a member of OITSWILLIAM PANG Discord chat server. You can then fill the request by clicking <b>join now</b> and join any follower-exclusive perks you like, including <a href="alpha-ea.html">alpha-EA</a>, but follower-exclusive badge is mandatory. If the request has passed, you will be given the SDS' address via DM in either Facebook, X or Discord, and you have to join in order to complete the request. The method may change overtime, such as we may expose SDS' address within the form instead of DM'ing SDS' address.
             </p>
@@ -430,15 +152,15 @@ function closeNav() {
         <li>
             <b>You may not share Sheer Dedicated Server's join address to uninvited users.</b>
         </li>
-      <li>Leaving OITSWILLIAM PANG Discord chat server will lose access to other follower-exclusive perks, but will not lose access to Sheer Dedicated Server.</li>
-        <li>Unfollowing Oitswilliam Pang in the last platform you are following will revoke all follower-exclusive perks.</li>
-        <li>If you want to surf around classic Sheer, then following or liking Oitswilliam Pang is not required.</li>
+      <li>Leaving OITSWILLIAM PANG Discord chat server will lose access to other follower-exclusive perks, but will not lose access to obtaining Sheer 2017 archives or Sheer Dedicated Server.</li>
+        <li>Unfollowing Oitswilliam Pang in the last platform you are following will revoke all follower-exclusive perks, including this.</li>
+        <li>If you want to surf around classic Sheer, this not required.</li>
         </ul>
     </div>
     <div id="joinerror" class="tabcontent section" style="display: none;">
         <h2>I got an error message while joining! What should I do?</h2>
-        <p>
-
+      <p>Sheer Dedicated Server uses whitelisting system.</p>
+		<p>
                 If you have got a message 
             <i>You are not the follower of Oitswilliam Pang!</i>
             , then it looks like you have unfollowed or not yet following Oitswilliam Pang.
@@ -456,12 +178,13 @@ function closeNav() {
             </p>
     </div>
     <div id="optout" class="tabcontent section" style="display: none;">
-        <h2>How do I properly opt-out from Sheer Dedicated Server?</h2>
+        <h2>How do I properly opt-out from Sheer Dedicated Server or access to Sheer 2017?</h2>
         <p>If you are not happy in Sheer Dedicated Server and you want to opt out, you can. You can do so by accessing the follower-exclusive perks form by clicking the <b>join now</b> button, and then choose <b>opt-out</b>. Please note that your inventory will be removed and structures you built will have your username hidden. You can select whether your structures should be removed.</p>
         <p>You must be joined in 90 days or later to opt-out, this is to prevent abuse.</p>
       <p>You can come back at any time after three days of leaving.</p>
         <p>Please note that unfollowing Oitswilliam Pang is not a right way to opt-out of Sheer Dedicated Server.
         </p>
+      <p>To opt-out from accessing Sheer 2017 for offline use, you cannot opt-out alone, you must opt-out from alpha-EA.</p>
     </div>
     <div id="reclaiming" class="tabcontent section" style="display: none;">
         <h2>How do I reclaim the land abandoned by stalkers?</h2>
@@ -576,7 +299,7 @@ document.getElementById("defaultOpen").click();
             </tr>
             <tr>
                 <td title="Requires additional perks access form. Leaving OITSWILLIAM PANG Discord chat server does not lose access to such perk.">
-                    Spectate anywhere in Sheer Dedicated Server
+                    Surf around Sheer 2017 offline or in SDS
                     <sup>4</sup>
                 </td>
                 <td>
@@ -656,7 +379,7 @@ document.getElementById("defaultOpen").click();
           </div>
     </div>
 </div>
-<div id="izp9zr3-8" class="footer-nav--container"><div id="ijpscfp-3-4" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-3-15">Main categories</H3><P id="iejg7kj-4-15"><A href="./hardware.html" id="ia0ytdj-4-15">Hardware</A></P><P id="iejg7kj-2-5-15"><A href="./media.html" id="ia0ytdj-2-5-15">Media</A></P><P id="iejg7kj-2-3-4-15"><A href="./minecraft-content.html" id="ia0ytdj-2-3-4-15">For Minecraft</A></P><P id="iejg7kj-2-2-3-15"><A href="./support.html" id="ia0ytdj-2-2-2-15">Support</A></P><H3 id="iha1ect-4-15">Featured projects<br id="ig51bx7-3-15"/></H3><P id="iejg7kj-2-3-2-5-15"><A href="./interview-with-oitswilliam.html" id="ia0ytdj-2-3-2-5-15">Interview with Oitswilliam<br id="i2rs205-5-15"/></A></P><P id="iejg7kj-2-3-2-3-3-15"><A href="./oitswilliamv2.html" id="ia0ytdj-2-3-2-3-3-15">OitswilliamV2<br id="i2rs205-3-3-15"/></A></P><P id="iejg7kj-2-3-2-2-3-15"><A href="./oitswilliamv0.html" id="ia0ytdj-2-3-2-2-3-15">OITSWILLIAMV0<br id="i2rs205-2-3-15"/></A></P></div><div id="ijpscfp-2-2-4" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-2-2-15">About</H3><P id="iejg7kj-3-2-15"><A href="./owned-3d-printers.html" id="ia0ytdj-3-2-15">Owned 3D printers</A></P><P id="iejg7kj-2-4-2-15"><A href="./rigs.html" id="ia0ytdj-2-4-2-15">Rigs</A></P><P id="iejg7kj-2-3-3-2-15"><A href="./events.html" id="ia0ytdj-2-3-3-2-15">Future events</A></P><P id="iejg7kj-2-2-2-2-15"></P><H3 id="iha1ect-3-2-15">Using Oitswilliam's products<br id="ig51bx7-2-2-15"/></H3><P id="iejg7kj-2-3-2-4-2-15"><A href="./terms-of-use.html" id="ia0ytdj-2-3-2-4-2-15">Terms of Use<br id="i2rs205-4-2-15"/></A></P><P id="iejg7kj-2-3-2-3-2-2-15"><A href="./oitswilliam-pang-minecraft-maps-and-legacy-projects-policies.html" id="ia0ytdj-2-3-2-3-2-2-15">Oitswilliam's MC Maps Policy<br id="i2rs205-3-2-2-15"/></A></P><P id="iejg7kj-2-3-2-2-2-2-15"><A href="./sheer-dedicated-server-usage-policy.html" id="ia0ytdj-2-3-2-2-2-2-15">SDS Usage Policy<br id="i2rs205-2-2-2-15"/></A></P></div></div><div id="i12iczf-2-15"><H2 id="imjgvrl">Follow Oitswilliam Pang now on:</H2><div id="follow-on-platforms" class="social-media-icon-list">
+<div id="izp9zr3-8" class="footer-nav--container"><div id="ijpscfp-3-4" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-3-15">Main categories</H3><P id="iejg7kj-4-15"><A href="./hardware.html" id="ia0ytdj-4-15">Hardware</A></P><P id="iejg7kj-2-5-15"><A href="./media.html" id="ia0ytdj-2-5-15">Media</A></P><P id="iejg7kj-2-3-4-15"><A href="./minecraft-content.html" id="ia0ytdj-2-3-4-15">For Minecraft</A></P><P id="iejg7kj-2-2-3-15"><A href="./support.html" id="ia0ytdj-2-2-2-15">Support</A></P><H3 id="iha1ect-4-15">Featured projects<br id="ig51bx7-3-15"/></H3><P id="iejg7kj-2-3-2-5-15"><A href="./interview-with-oitswilliam.html" id="ia0ytdj-2-3-2-5-15">Interview with Oitswilliam<br id="i2rs205-5-15"/></A></P><P id="iejg7kj-2-3-2-3-3-15"><A href="./oitswilliamv2.html" id="ia0ytdj-2-3-2-3-3-15">OitswilliamV2<br id="i2rs205-3-3-15"/></A></P><P id="iejg7kj-2-3-2-2-3-15"><A href="./oitswilliamv0.html" id="ia0ytdj-2-3-2-2-3-15">OITSWILLIAMV0<br id="i2rs205-2-3-15"/></A></P></div><div id="ijpscfp-2-2-4" class="footer-nav hide-on-mobile"><H3 id="iha1ect-2-2-2-15">About</H3><P id="iejg7kj-3-2-15"><A href="./owned-3d-printers.html" id="ia0ytdj-3-2-15">Owned 3D printers</A></P><P id="iejg7kj-2-4-2-15"><A href="./rigs.html" id="ia0ytdj-2-4-2-15">Rigs</A></P><P id="iejg7kj-2-3-3-2-15"><A href="./events.html" id="ia0ytdj-2-3-3-2-15">Future events</A></P><P id="iejg7kj-2-2-2-2-15"></P><H3 id="iha1ect-3-2-15">Using Oitswilliam's products<br id="ig51bx7-2-2-15"/></H3><P id="iejg7kj-2-3-2-4-2-15"><A href="./terms-of-use.html" id="ia0ytdj-2-3-2-4-2-15">Terms of Use<br id="i2rs205-4-2-15"/></A></P><P id="iejg7kj-2-3-2-3-2-2-15"><A href="./oitswilliam-pang-minecraft-maps-and-legacy-projects-policies.html" id="ia0ytdj-2-3-2-3-2-2-15">Oitswilliam's MC Maps Policy<br id="i2rs205-3-2-2-15"/></A></P><P id="iejg7kj-2-3-2-2-2-2-15"><A href="./sheer-usage-policy.html" id="ia0ytdj-2-3-2-2-2-2-15">SDS Usage Policy<br id="i2rs205-2-2-2-15"/></A></P></div></div><div id="i12iczf-2-15"><H2 id="imjgvrl">Follow Oitswilliam Pang now on:</H2><div id="follow-on-platforms" class="social-media-icon-list">
     <a href="https://www.facebook.com/williampang.3363" target="_blank">
         <div class="social-media-icon">
             <!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
